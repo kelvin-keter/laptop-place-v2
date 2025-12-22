@@ -90,6 +90,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# STATICFILES_DIRS is empty because you haven't created core/static yet.
+# This prevents the "Directory not found" error.
+STATICFILES_DIRS = []
+
 # Media Files (Images via Cloudinary)
 MEDIA_URL = '/media/'
 
@@ -108,13 +112,13 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # We use the standard storage to avoid the "Missing File" crash during build
+        # We use standard storage to avoid the "Cloudinary File Missing" crash
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
 # 2. The Legacy Setting
-# This ensures compatibility with 3rd party apps
+# Required for compatibility with 3rd party apps
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 # ---------------------------------------
