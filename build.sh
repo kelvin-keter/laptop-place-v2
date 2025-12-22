@@ -4,12 +4,11 @@ set -o errexit
 
 pip install -r requirements.txt
 
-# 1. Force delete old static files to ensure a fresh copy
+# 1. Force delete old static files (Fixes "0 files copied" bug)
 rm -rf staticfiles
 
-# 2. Collect static files but IGNORE the broken Cloudinary file
-# This is the "Magic Flag" that fixes the build crash
-python manage.py collectstatic --no-input --clear --ignore "cloudinary_cors.html"
+# 2. Collect static files (Standard mode - no crashes)
+python manage.py collectstatic --no-input --clear
 
 python manage.py migrate
 

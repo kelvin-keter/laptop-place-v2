@@ -2,13 +2,10 @@ import os
 from pathlib import Path
 import dj_database_url
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-key-123')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = ['*']
@@ -33,7 +30,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Critical: Serves the files
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Critical: This serves the files!
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -98,22 +95,21 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION ---
+# --- STORAGE CONFIGURATION (SAFE MODE) ---
+# We use standard storage to avoid crashes on broken 3rd party files.
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # use Compressed storage for speed
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
-# Legacy Setting (Required for compatibility)
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-# -----------------------------
+# Legacy Setting
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+# ---------------------------------------
 
-# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if not DEBUG:
