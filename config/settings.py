@@ -11,6 +11,9 @@ DEBUG = 'RENDER' not in os.environ
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    # MOVED TO TOP: Ensure static files are found first!
+    'django.contrib.staticfiles',
+    
     # 3rd Party
     'cloudinary_storage',
     'cloudinary',
@@ -22,7 +25,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
 
     # Our Apps
     'core',
@@ -30,7 +32,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Critical: This serves the files!
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Serves the files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -85,7 +87,13 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [] 
 
-# Media Files (Images via Cloudinary)
+# ADDED: Explicitly tell Django how to find files (Fixes "0 files copied")
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+# Media Files
 MEDIA_URL = '/media/'
 
 # CLOUDINARY KEYS
@@ -96,18 +104,15 @@ CLOUDINARY_STORAGE = {
 }
 
 # --- STORAGE CONFIGURATION (SAFE MODE) ---
-# We use standard storage to avoid crashes on broken 3rd party files.
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # This copies files without crashing on errors
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
-# Legacy Setting
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 # ---------------------------------------
 
