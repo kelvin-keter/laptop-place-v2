@@ -98,25 +98,20 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION (FINAL FIX) ---
-
-# 1. The Modern Django 5 Way
+# --- STORAGE CONFIGURATION ---
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # CHANGED: Use Compressed storage. 
-        # This forces files to copy/compress (Fixes "0 files")
-        # BUT it skips strict link checking (Fixes "Crash")
+        # use Compressed storage for speed
         "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
-# 2. The Legacy Setting
+# Legacy Setting (Required for compatibility)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-
-# ---------------------------------------
+# -----------------------------
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
