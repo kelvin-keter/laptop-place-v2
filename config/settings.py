@@ -33,7 +33,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Middleware still serves the files!
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Critical: Serves the files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -98,7 +98,7 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION (SAFE MODE) ---
+# --- STORAGE CONFIGURATION (FINAL FIX) ---
 
 # 1. The Modern Django 5 Way
 STORAGES = {
@@ -106,14 +106,15 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # CHANGED: Use Standard Django Storage. 
-        # This disables WhiteNoise compression during build, preventing the crash.
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        # CHANGED: Use Compressed storage. 
+        # This forces files to copy/compress (Fixes "0 files")
+        # BUT it skips strict link checking (Fixes "Crash")
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
 # 2. The Legacy Setting
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 # ---------------------------------------
 
@@ -124,4 +125,3 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    
