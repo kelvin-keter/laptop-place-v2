@@ -35,7 +35,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Critical for styles on Render
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Critical: This serves the files!
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -49,7 +49,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [], # Add templates folders here if using global templates
+        'DIRS': [], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -64,10 +64,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+# Use SQLite locally, PostgreSQL on Render
 DATABASES = {
     'default': dj_database_url.config(
-        # Use SQLite locally, PostgreSQL on Render
         default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
         conn_max_age=600
     )
@@ -94,28 +93,29 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Media Files (Images via Cloudinary)
 MEDIA_URL = '/media/'
 
-# YOUR CLOUDINARY KEYS
+# CLOUDINARY KEYS
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'drkkg7wf2',
     'API_KEY': '637631316581369',
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION (THE FIX) ---
+# --- STORAGE CONFIGURATION (FIXED) ---
 
-# 1. The Modern Django 5 Way (Required for Django 5 to work)
+# 1. The Modern Django 5 Way
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        # We use the standard storage to avoid the "Missing File" crash during build
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
-# 2. The Legacy Setting (Required for Cloudinary/Whitenoise compatibility)
-# This prevents the AttributeError you saw earlier.
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+# 2. The Legacy Setting
+# This ensures compatibility with 3rd party apps
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
 # ---------------------------------------
 
@@ -127,4 +127,3 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    
