@@ -102,6 +102,7 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
+        # This copies files without crashing on errors
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }

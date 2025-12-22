@@ -4,7 +4,7 @@ set -o errexit
 
 pip install -r requirements.txt
 
-# 1. Force delete old static files (Fixes "0 files copied" bug)
+# 1. Force delete old static files to avoid conflicts
 rm -rf staticfiles
 
 # 2. Collect static files (Standard mode - no crashes)
