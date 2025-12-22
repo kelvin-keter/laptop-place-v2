@@ -86,7 +86,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [] # Empty list is fine for now
+STATICFILES_DIRS = [] 
 
 # Media Files (Images via Cloudinary)
 MEDIA_URL = '/media/'
@@ -98,24 +98,22 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION (THE FINAL FIX) ---
+# --- STORAGE CONFIGURATION (BULLETPROOF FIX) ---
 
-# 1. The Magic Setting: Prevents crash on missing Cloudinary files
-WHITENOISE_MANIFEST_STRICT = False
-
-# 2. The Modern Django 5 Way
+# 1. The Modern Django 5 Way
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # We go BACK to WhiteNoise, but with 'STRICT = False' above
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        # CHANGED: Removed 'Manifest' to stop the crash. 
+        # This compresses files but doesn't check for broken links.
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
-# 3. The Legacy Setting (Required for compatibility)
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# 2. The Legacy Setting
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 # ---------------------------------------
 
