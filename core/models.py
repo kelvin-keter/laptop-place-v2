@@ -11,18 +11,53 @@ class Category(models.Model):
         return self.name
 
 class Product(models.Model):
+    # --- DROPDOWN CHOICES ---
+    CONDITION_CHOICES = [
+        ('New', 'Brand New'),
+        ('Refurbished', 'Ex-UK Refurbished'),
+        ('Used', 'Used - Good Condition'),
+    ]
+    
+    RAM_CHOICES = [
+        ('4GB', '4GB'),
+        ('8GB', '8GB'),
+        ('16GB', '16GB'),
+        ('32GB', '32GB'),
+        ('64GB', '64GB'),
+    ]
+    
+    STORAGE_TYPE_CHOICES = [
+        ('SSD', 'SSD (Fast)'),
+        ('HDD', 'HDD (Large Storage)'),
+        ('NVMe', 'NVMe (Super Fast)'),
+    ]
+
+    # --- BASIC INFO ---
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     
-    # Pricing (KES)
+    # --- PRICING (KES) ---
     price = models.DecimalField(max_digits=10, decimal_places=0, help_text="Current Price in KES")
     old_price = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True, help_text="Previous Price (to show discount)")
     
-    # Media
-    image = models.ImageField(upload_to='products/')
+    # --- NEW: COMMERCIAL INFO ---
+    condition = models.CharField(max_length=50, choices=CONDITION_CHOICES, default='Refurbished')
     
-    # Status
+    # --- NEW: TECHNICAL SPECS ---
+    processor = models.CharField(max_length=200, default='Intel Core i5', help_text="e.g. Intel Core i5 6th Gen")
+    ram = models.CharField(max_length=10, choices=RAM_CHOICES, default='8GB')
+    storage = models.CharField(max_length=50, default='256GB', help_text="e.g. 256GB")
+    storage_type = models.CharField(max_length=10, choices=STORAGE_TYPE_CHOICES, default='SSD')
+    screen_size = models.CharField(max_length=50, default='14 inch', help_text="e.g. 14 inch FHD")
+    
+    # --- NEW: KEY FEATURES (Checkboxes) ---
+    touchscreen = models.BooleanField(default=False)
+    backlit_keyboard = models.BooleanField(default=False)
+    fingerprint_sensor = models.BooleanField(default=False)
+    
+    # --- MEDIA & STATUS ---
+    image = models.ImageField(upload_to='products/')
     is_featured = models.BooleanField(default=False, help_text="Tick this to show on the Homepage")
     in_stock = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -36,4 +71,3 @@ class Product(models.Model):
             discount = ((self.old_price - self.price) / self.old_price) * 100
             return int(discount)
         return 0
-    
