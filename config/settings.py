@@ -85,7 +85,7 @@ USE_TZ = True
 # STATIC FILES (CSS/JS)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
 
 # MEDIA FILES (Images via Cloudinary)
 MEDIA_URL = '/media/'
@@ -94,7 +94,16 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '637631316581369',
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# PASTE THIS (The Django 5 Way)
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+    },
+}
 
 # SECURITY
 if not DEBUG:
