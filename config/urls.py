@@ -1,15 +1,22 @@
 from django.contrib import admin
 from django.urls import path
-from core.views import index
-from django.conf import settings             # New import
-from django.conf.urls.static import static   # New import
+# We import views from the 'core' app folder
+from core.views import index, product_detail
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
+    # Admin Panel
     path('admin/', admin.site.urls),
+    
+    # Homepage (http://your-site.com/)
     path('', index, name='index'),
+
+    # Product Detail Page (http://your-site.com/product/1/)
+    # <int:pk> means "expect a number here" (like an ID)
+    path('product/<int:pk>/', product_detail, name='product_detail'),
 ]
 
-# This is the magic part:
-# It tells Django to serve media files when running locally
+# This ensures images load correctly when you run the server locally
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
