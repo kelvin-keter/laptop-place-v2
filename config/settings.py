@@ -6,11 +6,9 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# Default to a dev key locally, use the Env variable on Render
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-key-123')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# This sets DEBUG to False if running on Render
 DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = ['*']
@@ -35,7 +33,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Critical: This serves the files!
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -64,7 +62,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
-# Use SQLite locally, PostgreSQL on Render
 DATABASES = {
     'default': dj_database_url.config(
         default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
@@ -89,10 +86,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# STATICFILES_DIRS is empty because you haven't created core/static yet.
-# This prevents the "Directory not found" error.
-STATICFILES_DIRS = []
+STATICFILES_DIRS = [] # Empty list is fine for now
 
 # Media Files (Images via Cloudinary)
 MEDIA_URL = '/media/'
@@ -104,29 +98,30 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION (FIXED) ---
+# --- STORAGE CONFIGURATION (THE FINAL FIX) ---
 
-# 1. The Modern Django 5 Way
+# 1. The Magic Setting: Prevents crash on missing Cloudinary files
+WHITENOISE_MANIFEST_STRICT = False
+
+# 2. The Modern Django 5 Way
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # We use standard storage to avoid the "Cloudinary File Missing" crash
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        # We go BACK to WhiteNoise, but with 'STRICT = False' above
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
 
-# 2. The Legacy Setting
-# Required for compatibility with 3rd party apps
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+# 3. The Legacy Setting (Required for compatibility)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # ---------------------------------------
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Extra Security for Production
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
