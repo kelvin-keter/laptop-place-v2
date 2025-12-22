@@ -4,10 +4,10 @@ set -o errexit
 
 pip install -r requirements.txt
 
-# 1. Force delete old static files to avoid conflicts
+# Force delete old static files
 rm -rf staticfiles
 
-# 2. Collect static files (Standard mode - no crashes)
+# Collect static files
 python manage.py collectstatic --no-input --clear
 
 python manage.py migrate
