@@ -1,19 +1,30 @@
-from django.shortcuts import render, get_object_or_404  # Added get_object_or_404
+from django.shortcuts import render, get_object_or_404
+from django.db.models import Q  # Needed for the search logic
 from .models import Product
 
 def index(request):
-    # Fetch all products from the database
-    # PRESERVED: We keep your logic to only show available items
+    # 1. Start with your base rule: Only show items that are in stock
     products = Product.objects.filter(in_stock=True)
+    
+    # 2. Check if the user clicked a category link (e.g., /?q=HP)
+    query = request.GET.get('q')
+    
+    if query:
+        # If they did, filter the list further.
+        # This searches if the 'category name' OR the 'product name' contains the query.
+        # 'icontains' makes it case-insensitive (so 'hp' finds 'HP').
+        products = products.filter(
+            Q(category__name__icontains=query) | 
+            Q(name__icontains=query)
+        )
     
     context = {
         'products': products
     }
     return render(request, 'core/index.html', context)
 
-# NEW: This view fetches one specific product
+# This view fetches one specific product
 def product_detail(request, pk):
     # 'pk' is the Primary Key (ID) of the laptop
-    # get_object_or_404 tries to find it, or shows a 404 error if the ID is wrong
     product = get_object_or_404(Product, pk=pk)
     return render(request, 'core/product_detail.html', {'product': product})
