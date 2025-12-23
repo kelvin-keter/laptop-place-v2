@@ -6,20 +6,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-key-123')
 
+# Render sets this to False automatically
 DEBUG = 'RENDER' not in os.environ
 
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
-    # MOVED TO TOP: Ensure static files are found first!
-    'django.contrib.staticfiles',
-    
-    # 3rd Party
+    # 3rd Party (MUST be at the top, especially before staticfiles)
     'cloudinary_storage',
     'cloudinary',
     'whitenoise.runserver_nostatic',
 
     # Django Default Apps
+    'django.contrib.staticfiles',  # Keep this BELOW cloudinary_storage
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,7 +31,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Serves the files
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Critical for serving files on Render
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -87,34 +86,33 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [] 
 
-# ADDED: Explicitly tell Django how to find files (Fixes "0 files copied")
+# Explicitly tell Django how to find files
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
-# Media Files
+# Media Files (User Uploads)
 MEDIA_URL = '/media/'
 
-# CLOUDINARY KEYS
+# CLOUDINARY CONFIGURATION
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'drkkg7wf2',
     'API_KEY': '637631316581369',
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION (SAFE MODE) ---
+# --- STORAGE CONFIGURATION ---
+# This tells Django: "Store user uploads on Cloudinary, but keep site styling (CSS) on Render"
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
-# ---------------------------------------
+# -----------------------------
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
