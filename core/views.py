@@ -23,8 +23,19 @@ def index(request):
     }
     return render(request, 'core/index.html', context)
 
-# This view fetches one specific product
+# UPDATED: This view now fetches the product AND related items
 def product_detail(request, pk):
     # 'pk' is the Primary Key (ID) of the laptop
     product = get_object_or_404(Product, pk=pk)
-    return render(request, 'core/product_detail.html', {'product': product})
+    
+    # NEW LOGIC: Get related products
+    # 1. Filter by the same category
+    # 2. Exclude the current product (so we don't show it to them again)
+    # 3. Slice [:3] to only show the top 3 results
+    related_products = Product.objects.filter(category=product.category).exclude(pk=pk)[:3]
+    
+    context = {
+        'product': product,
+        'related_products': related_products
+    }
+    return render(request, 'core/product_detail.html', context)
