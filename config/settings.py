@@ -31,7 +31,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Critical for serving files
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -112,7 +112,8 @@ STORAGES = {
     },
 }
 
-# !!! CRITICAL FIX: This line is required for compatibility with the Cloudinary library !!!
+# !!! CRITICAL FIX FOR DEPLOYMENT !!!
+# This line is required because the Cloudinary library still checks for it.
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # -----------------------------
 
