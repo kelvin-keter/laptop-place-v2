@@ -3,77 +3,53 @@ from django.db.models import Q
 from .models import Product, Category
 
 def index(request):
-    # 1. Base Query: Get all in-stock products
     products = Product.objects.filter(in_stock=True)
-    
-    # 2. Get Categories for the sidebar
     categories = Category.objects.all()
-
-    # 3. Get Featured Products (Limit to top 3)
     featured_products = Product.objects.filter(in_stock=True, is_featured=True)[:3]
 
-    # --- SEARCH LOGIC ---
-    query = request.GET.get('q')
-    if query:
-        products = products.filter(
-            Q(category__name__icontains=query) | 
-            Q(name__icontains=query)
-        )
+    q = request.GET.get('q')
+    if q:
+        products = products.filter(Q(category__name__icontains=q) | Q(name__icontains=q))
 
-    # --- ADVANCED FILTERS ---
-    
-    # Filter by Category
-    category_filter = request.GET.get('category')
-    if category_filter:
-        products = products.filter(category__name=category_filter)
+    cat = request.GET.get('category')
+    if cat:
+        products = products.filter(category__name=cat)
 
-    # Filter by RAM
-    ram_filter = request.GET.get('ram')
-    if ram_filter:
-        products = products.filter(ram=ram_filter)
+    ram = request.GET.get('ram')
+    if ram:
+        products = products.filter(ram=ram)
 
-    # Filter by Condition
-    condition_filter = request.GET.get('condition')
-    if condition_filter:
-        products = products.filter(condition=condition_filter)
+    cond = request.GET.get('condition')
+    if cond:
+        products = products.filter(condition=cond)
 
-    # Filter by Price
-    max_price = request.GET.get('max_price')
-    if max_price:
+    price = request.GET.get('max_price')
+    if price:
         try:
-            products = products.filter(price__lte=max_price)
+            products = products.filter(price__lte=price)
         except ValueError:
-            pass 
+            pass
 
-    # Filter by Touchscreen
-    touchscreen = request.GET.get('touchscreen')
-    if touchscreen == 'on':
+    touch = request.GET.get('touchscreen')
+    if touch == 'on':
         products = products.filter(touchscreen=True)
 
-    # --- CONTEXT ---
     context = {
         'products': products,
         'featured_products': featured_products,
         'categories': categories,
-        'selected_ram': ram_filter,
-        'selected_condition': condition_filter,
-        'selected_touchscreen': touchscreen,
-        'selected_max_price': max_price,
-        'selected_category': category_filter,
+        'selected_ram': ram,
+        'selected_condition': cond,
+        'selected_touchscreen': touch,
+        'selected_max_price': price,
+        'selected_category': cat,
     }
     return render(request, 'core/index.html', context)
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    
-    # Logic: Same category, exclude current, top 3
-    related_products = Product.objects.filter(category=product.category).exclude(pk=pk)[:3]
-    
-    context = {
-        'product': product,
-        'related_products': related_products
-    }
-    return render(request, 'core/product_detail.html', context)
+    related = Product.objects.filter(category=product.category).exclude(pk=pk)[:3]
+    return render(request, 'core/product_detail.html', {'product': product, 'related_products': related})
 
 def contact(request):
     return render(request, 'core/contact.html')
