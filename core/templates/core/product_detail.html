@@ -1,5 +1,12 @@
 {% extends 'core/base.html' %}
 
+{% block title %}{{ product.name }} | Laptop Place Kenya{% endblock %}
+{% block og_title %}{{ product.name }} - KES {{ product.price }}{% endblock %}
+{% block og_description %}{{ product.description|truncatewords:30 }}{% endblock %}
+{% block og_image %}{% if product.image %}{{ product.image.url }}{% endif %}{% endblock %}
+{% block twitter_title %}{{ product.name }} - KES {{ product.price }}{% endblock %}
+{% block twitter_description %}{{ product.description|truncatewords:30 }}{% endblock %}
+
 {% block content %}
 <div class="container py-5">
     
