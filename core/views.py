@@ -1,37 +1,70 @@
 from django.shortcuts import render, get_object_or_404
-from django.db.models import Q  # Needed for the search logic
-from .models import Product
+from django.db.models import Q
+from .models import Product, Category  # <-- IMPORTED CATEGORY HERE
 
 def index(request):
-    # 1. Start with your base rule: Only show items that are in stock
+    # 1. Start with base rule: Only show items that are in stock
     products = Product.objects.filter(in_stock=True)
     
-    # 2. Check if the user clicked a category link (e.g., /?q=HP)
+    # 2. Get all categories for the sidebar dropdown
+    categories = Category.objects.all()
+
+    # --- EXISTING SEARCH LOGIC ---
     query = request.GET.get('q')
-    
     if query:
-        # If they did, filter the list further.
-        # This searches if the 'category name' OR the 'product name' contains the query.
-        # 'icontains' makes it case-insensitive (so 'hp' finds 'HP').
         products = products.filter(
             Q(category__name__icontains=query) | 
             Q(name__icontains=query)
         )
+
+    # --- NEW ADVANCED FILTERS ---
     
+    # Filter by Category (Sidebar Dropdown)
+    category_filter = request.GET.get('category')
+    if category_filter:
+        products = products.filter(category__name=category_filter)
+
+    # Filter by RAM (8GB vs 16GB)
+    ram_filter = request.GET.get('ram')
+    if ram_filter:
+        products = products.filter(ram=ram_filter)
+
+    # Filter by Condition (New vs Refurbished)
+    condition_filter = request.GET.get('condition')
+    if condition_filter:
+        products = products.filter(condition=condition_filter)
+
+    # Filter by Price (Max Budget)
+    max_price = request.GET.get('max_price')
+    if max_price:
+        try:
+            products = products.filter(price__lte=max_price)
+        except ValueError:
+            pass # Ignore if user enters text instead of numbers
+
+    # Filter by Touchscreen (Checkbox)
+    touchscreen = request.GET.get('touchscreen')
+    if touchscreen == 'on':
+        products = products.filter(touchscreen=True)
+
+    # --- CONTEXT ---
     context = {
-        'products': products
+        'products': products,
+        'categories': categories,
+        # Pass these back so the sidebar stays "checked" after filtering
+        'selected_ram': ram_filter,
+        'selected_condition': condition_filter,
+        'selected_touchscreen': touchscreen,
+        'selected_max_price': max_price,
+        'selected_category': category_filter,
     }
     return render(request, 'core/index.html', context)
 
-# UPDATED: This view now fetches the product AND related items
+# KEEPING YOUR PERFECT PRODUCT_DETAIL VIEW
 def product_detail(request, pk):
-    # 'pk' is the Primary Key (ID) of the laptop
     product = get_object_or_404(Product, pk=pk)
     
-    # NEW LOGIC: Get related products
-    # 1. Filter by the same category
-    # 2. Exclude the current product (so we don't show it to them again)
-    # 3. Slice [:3] to only show the top 3 results
+    # Logic: Same category, exclude current, top 3
     related_products = Product.objects.filter(category=product.category).exclude(pk=pk)[:3]
     
     context = {
