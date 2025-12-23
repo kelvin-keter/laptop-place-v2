@@ -108,13 +108,13 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # CHANGED: Use the "Safe" backend that ignores missing files
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        # CHANGED: Use basic storage. No compression = No crash.
+        "BACKEND": "whitenoise.storage.StaticFilesStorage",
     },
 }
 
-# CHANGED: Updated match the safe backend above
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+# CHANGED: Match the backend above
+STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 # -----------------------------
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
