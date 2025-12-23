@@ -108,13 +108,13 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        # CHANGED: Use the "Safe" backend that ignores missing files
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
-# !!! CRITICAL FIX FOR DEPLOYMENT !!!
-# This line is required because the Cloudinary library still checks for it.
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# CHANGED: Updated match the safe backend above
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 # -----------------------------
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
