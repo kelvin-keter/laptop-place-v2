@@ -1,6 +1,11 @@
 from django.contrib import admin
 from .models import Category, Product
 
+# --- NEW: CUSTOM BRANDING ---
+admin.site.site_header = "Laptop Place Kenya Admin"
+admin.site.site_title = "Laptop Place Manager"
+admin.site.index_title = "Inventory Dashboard"
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'slug')
@@ -8,20 +13,21 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    # 1. LIST VIEW: What you see in the main table
-    # I added 'ram' and 'condition' so you can quickly see specs
+    # 1. LIST VIEW
+    # Added 'touchscreen' so you can see features at a glance
     list_display = ('name', 'price', 'condition', 'ram', 'category', 'is_featured', 'in_stock')
     
-    # 2. FILTERS: Sidebar options to narrow down results
-    list_filter = ('category', 'condition', 'ram', 'in_stock', 'is_featured')
+    # 2. FILTERS
+    # Added 'touchscreen' and 'storage_type' to the sidebar filters
+    list_filter = ('category', 'condition', 'in_stock', 'is_featured', 'ram', 'touchscreen', 'storage_type')
     
-    # 3. SEARCH: Search by name, description, or processor
+    # 3. SEARCH
     search_fields = ('name', 'description', 'processor')
     
-    # 4. QUICK EDIT: Preserved your ability to edit these directly in the list
-    list_editable = ('price', 'in_stock', 'is_featured')
+    # 4. QUICK EDIT
+    list_editable = ('price', 'in_stock', 'is_featured', 'condition')
     
-    # 5. FORM LAYOUT: Grouping the fields nicely
+    # 5. FORM LAYOUT (Kept your excellent grouping!)
     fieldsets = (
         ('Basic Information', {
             'fields': ('category', 'name', 'image', 'description')
