@@ -12,13 +12,13 @@ DEBUG = 'RENDER' not in os.environ
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
-    # 3rd Party (MUST be at the top, especially before staticfiles)
+    # 3rd Party (MUST be at the top)
     'cloudinary_storage',
     'cloudinary',
     'whitenoise.runserver_nostatic',
 
     # Django Default Apps
-    'django.contrib.staticfiles',  # Keep this BELOW cloudinary_storage
+    'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -31,7 +31,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Critical for serving files on Render
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Critical for serving files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -103,7 +103,6 @@ CLOUDINARY_STORAGE = {
 }
 
 # --- STORAGE CONFIGURATION ---
-# This tells Django: "Store user uploads on Cloudinary, but keep site styling (CSS) on Render"
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
@@ -112,6 +111,9 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+# !!! CRITICAL FIX: This line is required for compatibility with the Cloudinary library !!!
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # -----------------------------
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
