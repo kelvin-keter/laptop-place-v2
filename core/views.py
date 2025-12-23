@@ -3,11 +3,15 @@ from django.db.models import Q
 from .models import Product, Category
 
 def index(request):
-    # 1. Start with base rule: Only show items that are in stock
+    # 1. Base Query: Get all in-stock products
     products = Product.objects.filter(in_stock=True)
     
-    # 2. Get all categories for the sidebar dropdown
+    # 2. Get Categories for the sidebar
     categories = Category.objects.all()
+
+    # 3. Get Featured Products (Limit to top 3) - NEW ADDITION
+    # This specifically looks for items where you checked "Is Featured" in the Admin
+    featured_products = Product.objects.filter(in_stock=True, is_featured=True)[:3]
 
     # --- SEARCH LOGIC ---
     query = request.GET.get('q')
@@ -50,6 +54,7 @@ def index(request):
     # --- CONTEXT ---
     context = {
         'products': products,
+        'featured_products': featured_products, # <-- Added this to context
         'categories': categories,
         # Pass these back so the sidebar stays "checked" after filtering
         'selected_ram': ram_filter,

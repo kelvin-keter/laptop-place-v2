@@ -40,6 +40,38 @@
     </div>
 </section>
 
+{% if featured_products and not request.GET %}
+<section class="container mb-5">
+    <h3 class="fw-bold mb-4 text-center">🔥 Hot Deals of the Week</h3>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for item in featured_products %}
+        <div class="col">
+            <div class="card h-100 border-0 shadow hover-effect" style="background: linear-gradient(to bottom right, #ffffff, #f8f9fa);">
+                <div class="position-absolute top-0 start-0 m-3">
+                    <span class="badge bg-danger shadow-sm">BEST DEAL</span>
+                </div>
+                
+                {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top p-3" alt="{{ item.name }}" style="height: 250px; object-fit: contain;">
+                {% else %}
+                <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 250px;">
+                    <i class="fas fa-camera fa-3x"></i>
+                </div>
+                {% endif %}
+                
+                <div class="card-body text-center">
+                    <h5 class="fw-bold">{{ item.name }}</h5>
+                    <p class="text-success fw-bold fs-5">KES {{ item.price }}</p>
+                    <a href="{% url 'product_detail' item.id %}" class="btn btn-outline-dark rounded-pill btn-sm">View Deal</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<hr class="container my-5 text-muted opacity-25">
+{% endif %}
+
 <section id="shop" class="container mb-5">
     <div class="row">
         
