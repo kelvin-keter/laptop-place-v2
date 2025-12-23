@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path
-# UPDATED: Added 'contact' to the list of imports
-from core.views import index, product_detail, contact
+# UPDATED: Added 'about' to imports
+from core.views import index, product_detail, contact, about
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -9,16 +9,18 @@ urlpatterns = [
     # Admin Panel
     path('admin/', admin.site.urls),
     
-    # Homepage (http://laptopplacekenya.com/)
+    # Homepage
     path('', index, name='index'),
 
     # Product Detail Page
     path('product/<int:pk>/', product_detail, name='product_detail'),
 
-    # NEW: Contact Us Page (http://laptopplacekenya.com/contact/)
+    # Contact Us Page
     path('contact/', contact, name='contact'),
+
+    # NEW: About Us Page
+    path('about/', about, name='about'),
 ]
 
-# This ensures images load correctly when you run the server locally
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

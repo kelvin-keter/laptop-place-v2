@@ -72,6 +72,9 @@ def product_detail(request, pk):
     }
     return render(request, 'core/product_detail.html', context)
 
-# --- NEW: CONTACT US VIEW ---
 def contact(request):
     return render(request, 'core/contact.html')
+
+# --- NEW: ABOUT US VIEW ---
+def about(request):
+    return render(request, 'core/about.html')

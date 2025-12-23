@@ -1,0 +1,82 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="bg-dark text-white text-center py-5" style="background: linear-gradient(rgba(0,104,56,0.9), rgba(0,0,0,0.9));">
+    <div class="container py-4">
+        <h1 class="display-4 fw-bold" style="font-family: 'Montserrat';">More Than Just Laptops</h1>
+        <p class="lead text-white-50">Bridging the digital divide in Kenya with premium, affordable technology.</p>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h2 class="fw-bold text-success mb-3">Who We Are</h2>
+            <p class="lead text-muted">
+                Laptop Place Kenya is a premier technology provider located in the heart of Nairobi. We specialize in high-quality Ex-UK refurbished laptops, business-grade computing solutions, and IT consultancy.
+            </p>
+            <p>
+                Founded on the principles of <strong>integrity and technical excellence</strong>, we don't just sell boxes; we provide solutions. Whether you are a student writing your first line of code, an architect designing skylines, or a business upgrading your fleet, we ensure you have the right tool for the job.
+            </p>
+            <p>
+                Our team acts as your trusted technology partner, ensuring every device is rigorously tested to meet global quality standards before it reaches your hands.
+            </p>
+        </div>
+        <div class="col-md-6">
+            <div class="p-5 bg-light rounded shadow-sm text-center border-start border-4 border-warning">
+                <i class="fas fa-quote-left fa-2x text-warning mb-3"></i>
+                <h4 class="fst-italic mb-3">"We believe technology is an enabler. Our mission is to put powerful tools into the hands of Kenyan innovators."</h4>
+                <div class="text-muted fw-bold">- The Laptop Place Team</div>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5 text-muted opacity-25">
+
+    <div class="text-center mb-5">
+        <h2 class="fw-bold mb-5">Why Choose Us?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4 hover-effect">
+                    <div class="mb-3 text-success">
+                        <i class="fas fa-check-double fa-3x"></i>
+                    </div>
+                    <h5 class="fw-bold">Rigorous Quality Testing</h5>
+                    <p class="text-muted small">
+                        Every machine undergoes a 25-point inspection by certified technicians. We check everything from battery health to thermal performance.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4 hover-effect">
+                    <div class="mb-3 text-warning">
+                        <i class="fas fa-handshake fa-3x"></i>
+                    </div>
+                    <h5 class="fw-bold">6-Month Warranty</h5>
+                    <p class="text-muted small">
+                        We stand behind our stock. Our comprehensive 6-month warranty gives you peace of mind and protection against hardware defects.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm p-4 hover-effect">
+                    <div class="mb-3 text-primary">
+                        <i class="fas fa-users fa-3x"></i>
+                    </div>
+                    <h5 class="fw-bold">Community Focused</h5>
+                    <p class="text-muted small">
+                        We are deeply rooted in the Kenyan tech ecosystem, supporting students and young professionals with affordable pricing and advice.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="bg-light rounded p-5 text-center border border-success border-opacity-25">
+        <h3 class="fw-bold mb-3">Ready to upgrade?</h3>
+        <p class="text-muted mb-4">Visit us at Sawa Mall, Shop B-29 or browse our catalogue online.</p>
+        <a href="{% url 'index' %}" class="btn btn-success btn-lg px-5">View Our Laptops</a>
+    </div>
+
+</div>
+{% endblock %}
