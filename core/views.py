@@ -9,8 +9,7 @@ def index(request):
     # 2. Get Categories for the sidebar
     categories = Category.objects.all()
 
-    # 3. Get Featured Products (Limit to top 3) - NEW ADDITION
-    # This specifically looks for items where you checked "Is Featured" in the Admin
+    # 3. Get Featured Products (Limit to top 3)
     featured_products = Product.objects.filter(in_stock=True, is_featured=True)[:3]
 
     # --- SEARCH LOGIC ---
@@ -23,30 +22,30 @@ def index(request):
 
     # --- ADVANCED FILTERS ---
     
-    # Filter by Category (Sidebar Dropdown)
+    # Filter by Category
     category_filter = request.GET.get('category')
     if category_filter:
         products = products.filter(category__name=category_filter)
 
-    # Filter by RAM (8GB vs 16GB)
+    # Filter by RAM
     ram_filter = request.GET.get('ram')
     if ram_filter:
         products = products.filter(ram=ram_filter)
 
-    # Filter by Condition (New vs Refurbished)
+    # Filter by Condition
     condition_filter = request.GET.get('condition')
     if condition_filter:
         products = products.filter(condition=condition_filter)
 
-    # Filter by Price (Max Budget)
+    # Filter by Price
     max_price = request.GET.get('max_price')
     if max_price:
         try:
             products = products.filter(price__lte=max_price)
         except ValueError:
-            pass # Ignore if user enters text instead of numbers
+            pass 
 
-    # Filter by Touchscreen (Checkbox)
+    # Filter by Touchscreen
     touchscreen = request.GET.get('touchscreen')
     if touchscreen == 'on':
         products = products.filter(touchscreen=True)
@@ -54,9 +53,8 @@ def index(request):
     # --- CONTEXT ---
     context = {
         'products': products,
-        'featured_products': featured_products, # <-- Added this to context
+        'featured_products': featured_products,
         'categories': categories,
-        # Pass these back so the sidebar stays "checked" after filtering
         'selected_ram': ram_filter,
         'selected_condition': condition_filter,
         'selected_touchscreen': touchscreen,
@@ -80,6 +78,5 @@ def product_detail(request, pk):
 def contact(request):
     return render(request, 'core/contact.html')
 
-# --- NEW: ABOUT US VIEW ---
 def about(request):
     return render(request, 'core/about.html')
