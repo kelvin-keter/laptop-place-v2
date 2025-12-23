@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Q
-from .models import Product, Category  # <-- IMPORTED CATEGORY HERE
+from .models import Product, Category
 
 def index(request):
     # 1. Start with base rule: Only show items that are in stock
@@ -9,7 +9,7 @@ def index(request):
     # 2. Get all categories for the sidebar dropdown
     categories = Category.objects.all()
 
-    # --- EXISTING SEARCH LOGIC ---
+    # --- SEARCH LOGIC ---
     query = request.GET.get('q')
     if query:
         products = products.filter(
@@ -17,7 +17,7 @@ def index(request):
             Q(name__icontains=query)
         )
 
-    # --- NEW ADVANCED FILTERS ---
+    # --- ADVANCED FILTERS ---
     
     # Filter by Category (Sidebar Dropdown)
     category_filter = request.GET.get('category')
@@ -60,7 +60,6 @@ def index(request):
     }
     return render(request, 'core/index.html', context)
 
-# KEEPING YOUR PERFECT PRODUCT_DETAIL VIEW
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
     
@@ -72,3 +71,7 @@ def product_detail(request, pk):
         'related_products': related_products
     }
     return render(request, 'core/product_detail.html', context)
+
+# --- NEW: CONTACT US VIEW ---
+def contact(request):
+    return render(request, 'core/contact.html')
