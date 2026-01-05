@@ -107,11 +107,14 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # FIXED: Use CompressedManifest to ensure Admin files are found and cached correctly
+        # Use CompressedManifest to ensure Admin files are found and cached correctly
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-# -----------------------------
+
+# REQUIRED FOR DJANGO 6.0 COMPATIBILITY
+# The cloudinary library checks this old setting, so we must define it.
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
