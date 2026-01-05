@@ -135,7 +135,7 @@
         
         <div class="col-md-3 mb-4">
             <div class="card border-0 shadow-sm p-3 sticky-top" style="top: 100px; z-index: 1;">
-                <h5 class="fw-bold mb-3"><i class="fas fa-filter me-2"></i>Filter By</h5>
+                <h5 class="fw-bold mb-3"><i class="fas fa-filter me-2"></i>Filter Inventory</h5>
                 
                 <form method="get" action=".">
                     {% if request.GET.q %}
@@ -143,7 +143,32 @@
                     {% endif %}
 
                     <div class="mb-3">
-                        <label class="fw-bold small text-muted mb-2">Category</label>
+                        <label class="fw-bold small text-muted mb-2">Shop by Purpose</label>
+                        <select name="usage" class="form-select form-select-sm border-success">
+                            <option value="">Any Usage</option>
+                            <option value="Student" {% if selected_usage == 'Student' %}selected{% endif %}>Student / College</option>
+                            <option value="Gaming" {% if selected_usage == 'Gaming' %}selected{% endif %}>Gaming & Graphics</option>
+                            <option value="Business" {% if selected_usage == 'Business' %}selected{% endif %}>Business / Enterprise</option>
+                            <option value="Premium" {% if selected_usage == 'Premium' %}selected{% endif %}>Premium & Sleek</option>
+                            <option value="Everyday" {% if selected_usage == 'Everyday' %}selected{% endif %}>Everyday Home Use</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="fw-bold small text-muted mb-2">Design & Build</label>
+                        <select name="type" class="form-select form-select-sm">
+                            <option value="">Any Design</option>
+                            <option value="X360" {% if selected_type == 'X360' %}selected{% endif %}>X360 / Convertible</option>
+                            <option value="Slim" {% if selected_type == 'Slim' %}selected{% endif %}>Slim / Ultrabook</option>
+                            <option value="Detachable" {% if selected_type == 'Detachable' %}selected{% endif %}>Detachable</option>
+                            <option value="Standard" {% if selected_type == 'Standard' %}selected{% endif %}>Standard Laptop</option>
+                        </select>
+                    </div>
+                    
+                    <hr class="opacity-25 my-3">
+
+                    <div class="mb-3">
+                        <label class="fw-bold small text-muted mb-2">Brand</label>
                         <select name="category" class="form-select form-select-sm">
                             <option value="">All Brands</option>
                             {% for cat in categories %}
@@ -161,17 +186,31 @@
 
                     <div class="mb-3">
                         <label class="fw-bold small text-muted mb-2">RAM</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="ram" value="" id="ramAll" checked>
-                            <label class="form-check-label" for="ramAll">Any</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="ram" value="8GB" id="ram8" {% if selected_ram == '8GB' %}checked{% endif %}>
-                            <label class="form-check-label" for="ram8">8GB</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="ram" value="16GB" id="ram16" {% if selected_ram == '16GB' %}checked{% endif %}>
-                            <label class="form-check-label" for="ram16">16GB</label>
+                        <div class="row row-cols-2 g-2">
+                            <div class="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ram" value="" id="ramAll" checked>
+                                    <label class="form-check-label small" for="ramAll">Any</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ram" value="8GB" id="ram8" {% if selected_ram == '8GB' %}checked{% endif %}>
+                                    <label class="form-check-label small" for="ram8">8GB</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ram" value="16GB" id="ram16" {% if selected_ram == '16GB' %}checked{% endif %}>
+                                    <label class="form-check-label small" for="ram16">16GB</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="ram" value="32GB" id="ram32" {% if selected_ram == '32GB' %}checked{% endif %}>
+                                    <label class="form-check-label small" for="ram32">32GB+</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -183,8 +222,10 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-success w-100 btn-sm">Apply Filters</button>
-                    <a href="{% url 'index' %}" class="btn btn-outline-secondary w-100 btn-sm mt-2">Clear</a>
+                    <button type="submit" class="btn btn-success w-100 btn-sm shadow-sm">
+                        <i class="fas fa-filter me-1"></i> Apply Filters
+                    </button>
+                    <a href="{% url 'index' %}" class="btn btn-outline-secondary w-100 btn-sm mt-2">Clear All</a>
                 </form>
             </div>
         </div>
