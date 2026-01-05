@@ -31,7 +31,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Critical for Admin Styles
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -84,7 +84,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [] 
 
 # Explicitly tell Django how to find files
 STATICFILES_FINDERS = [
@@ -102,19 +101,16 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION ---
+# --- STORAGE CONFIGURATION (UPDATED) ---
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # CHANGED: Use basic storage. No compression = No crash.
-        "BACKEND": "whitenoise.storage.StaticFilesStorage",
+        # FIXED: Use CompressedManifest to ensure Admin files are found and cached correctly
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-
-# CHANGED: Match the backend above
-STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
 # -----------------------------
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
