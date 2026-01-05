@@ -41,17 +41,17 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=0, help_text="Current Price in KES")
     old_price = models.DecimalField(max_digits=10, decimal_places=0, blank=True, null=True, help_text="Previous Price (to show discount)")
     
-    # --- NEW: COMMERCIAL INFO ---
+    # --- COMMERCIAL INFO ---
     condition = models.CharField(max_length=50, choices=CONDITION_CHOICES, default='Refurbished')
     
-    # --- NEW: TECHNICAL SPECS ---
+    # --- TECHNICAL SPECS ---
     processor = models.CharField(max_length=200, default='Intel Core i5', help_text="e.g. Intel Core i5 6th Gen")
     ram = models.CharField(max_length=10, choices=RAM_CHOICES, default='8GB')
     storage = models.CharField(max_length=50, default='256GB', help_text="e.g. 256GB")
     storage_type = models.CharField(max_length=10, choices=STORAGE_TYPE_CHOICES, default='SSD')
     screen_size = models.CharField(max_length=50, default='14 inch', help_text="e.g. 14 inch FHD")
     
-    # --- NEW: KEY FEATURES (Checkboxes) ---
+    # --- KEY FEATURES ---
     touchscreen = models.BooleanField(default=False)
     backlit_keyboard = models.BooleanField(default=False)
     fingerprint_sensor = models.BooleanField(default=False)
@@ -65,9 +65,23 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
-    # Helper to calculate discount percentage
     def get_discount_percentage(self):
         if self.old_price and self.old_price > self.price:
             discount = ((self.old_price - self.price) / self.old_price) * 100
             return int(discount)
         return 0
+
+# --- NEW: CUSTOMER REVIEWS MODEL ---
+class Review(models.Model):
+    product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, help_text="Customer Name")
+    rating = models.IntegerField(default=5, choices=[(i, i) for i in range(1, 6)])
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.name}'s review on {self.product.name}"
+    
+    # Allows us to loop stars in the template
+    def stars_range(self):
+        return range(self.rating)
