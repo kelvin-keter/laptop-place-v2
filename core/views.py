@@ -7,10 +7,16 @@ def index(request):
     categories = Category.objects.all()
     featured_products = Product.objects.filter(in_stock=True, is_featured=True)[:3]
 
+    # --- 1. SEARCH (Name or Category) ---
     q = request.GET.get('q')
     if q:
-        products = products.filter(Q(category__name__icontains=q) | Q(name__icontains=q))
+        products = products.filter(
+            Q(category__name__icontains=q) | 
+            Q(name__icontains=q) |
+            Q(description__icontains=q)
+        )
 
+    # --- 2. EXISTING FILTERS ---
     cat = request.GET.get('category')
     if cat:
         products = products.filter(category__name=cat)
@@ -26,7 +32,7 @@ def index(request):
     price = request.GET.get('max_price')
     if price:
         try:
-            products = products.filter(price__lte=price)
+            products = products.filter(price__lte=int(price))
         except ValueError:
             pass
 
@@ -34,15 +40,28 @@ def index(request):
     if touch == 'on':
         products = products.filter(touchscreen=True)
 
+    # --- 3. NEW FILTERS (Usage & Type) ---
+    usage = request.GET.get('usage')
+    if usage:
+        products = products.filter(usage=usage)
+
+    l_type = request.GET.get('type')
+    if l_type:
+        products = products.filter(laptop_type=l_type)
+
     context = {
         'products': products,
         'featured_products': featured_products,
         'categories': categories,
+        
+        # Keep filter state in the form/URL
         'selected_ram': ram,
         'selected_condition': cond,
         'selected_touchscreen': touch,
         'selected_max_price': price,
         'selected_category': cat,
+        'selected_usage': usage,  # New
+        'selected_type': l_type,  # New
     }
     return render(request, 'core/index.html', context)
 

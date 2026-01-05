@@ -32,6 +32,22 @@ class Product(models.Model):
         ('NVMe', 'NVMe (Super Fast)'),
     ]
 
+    # --- NEW: USAGE & TYPE CHOICES ---
+    USAGE_CHOICES = [
+        ('Everyday', 'Everyday Laptops'),
+        ('Business', 'Business/Enterprise Laptops'),
+        ('Premium', 'Premium Laptops'),
+        ('Gaming', 'Gaming Laptops'),
+        ('Student', 'Student Laptops'),
+    ]
+
+    TYPE_CHOICES = [
+        ('Standard', 'Standard Laptop'),
+        ('X360', 'X360 / Convertible'),
+        ('Detachable', 'Detachable'),
+        ('Slim', 'Ultrabook / Slim'),
+    ]
+
     # --- BASIC INFO ---
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
@@ -43,6 +59,10 @@ class Product(models.Model):
     
     # --- COMMERCIAL INFO ---
     condition = models.CharField(max_length=50, choices=CONDITION_CHOICES, default='Refurbished')
+    
+    # --- NEW: CLASSIFICATION FIELDS ---
+    usage = models.CharField(max_length=20, choices=USAGE_CHOICES, default='Everyday', help_text="Best use case (e.g. Student, Gaming)")
+    laptop_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default='Standard', help_text="Physical style (e.g. X360, Slim)")
     
     # --- TECHNICAL SPECS ---
     processor = models.CharField(max_length=200, default='Intel Core i5', help_text="e.g. Intel Core i5 6th Gen")
@@ -71,7 +91,7 @@ class Product(models.Model):
             return int(discount)
         return 0
 
-# --- NEW: CUSTOMER REVIEWS MODEL ---
+# --- CUSTOMER REVIEWS MODEL ---
 class Review(models.Model):
     product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)
     name = models.CharField(max_length=100, help_text="Customer Name")
@@ -82,6 +102,5 @@ class Review(models.Model):
     def __str__(self):
         return f"{self.name}'s review on {self.product.name}"
     
-    # Allows us to loop stars in the template
     def stars_range(self):
         return range(self.rating)

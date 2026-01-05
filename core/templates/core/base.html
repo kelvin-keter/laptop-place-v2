@@ -143,20 +143,33 @@
                     
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Laptop Brands
+                            Laptops
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><h6 class="dropdown-header text-uppercase text-muted small fw-bold">By Type</h6></li>
+                            <li><a class="dropdown-item" href="{% url 'index' %}">All</a></li>
+                            <li><a class="dropdown-item" href="{% url 'index' %}?type=X360">X360 / Convertible</a></li>
+                            <li><a class="dropdown-item" href="{% url 'index' %}?type=Detachable">Detachable</a></li>
+                            <li><a class="dropdown-item" href="{% url 'index' %}?touchscreen=on">TouchScreen</a></li>
+                            <li><a class="dropdown-item" href="{% url 'index' %}?type=Slim">Slim / Ultrabooks</a></li>
+                            
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li><h6 class="dropdown-header text-uppercase text-muted small fw-bold">By Usage</h6></li>
+                            <li><a class="dropdown-item" href="{% url 'index' %}?usage=Everyday">Everyday Laptops</a></li>
+                            <li><a class="dropdown-item" href="{% url 'index' %}?usage=Business">Business/Enterprise</a></li>
+                            <li><a class="dropdown-item" href="{% url 'index' %}?usage=Premium">Premium</a></li>
+                            <li><a class="dropdown-item" href="{% url 'index' %}?usage=Gaming">Gaming</a></li>
+                            <li><a class="dropdown-item" href="{% url 'index' %}?usage=Student">Student</a></li>
+                            <li><a class="dropdown-item" href="{% url 'index' %}?max_price=25000">Budget-Friendly (Under 25K)</a></li>
+                            
+                            <li><hr class="dropdown-divider"></li>
+
+                            <li><h6 class="dropdown-header text-uppercase text-muted small fw-bold">By Brand</h6></li>
                             <li><a class="dropdown-item" href="/?q=HP">HP</a></li>
                             <li><a class="dropdown-item" href="/?q=Dell">Dell</a></li>
                             <li><a class="dropdown-item" href="/?q=Lenovo">Lenovo</a></li>
                             <li><a class="dropdown-item" href="/?q=Apple">Apple (MacBook)</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="/?q=Asus">Asus</a></li>
-                            <li><a class="dropdown-item" href="/?q=Acer">Acer</a></li>
-                            <li><a class="dropdown-item" href="/?q=Microsoft">Microsoft Surface</a></li>
-                            <li><a class="dropdown-item" href="/?q=Toshiba">Toshiba</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item fw-bold" href="/?q=Accessories">All Accessories</a></li>
                         </ul>
                     </li>
 
@@ -196,7 +209,7 @@
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h5 class="text-uppercase mb-4 fw-bold text-success">Contact Us</h5>
                     <p>
-                        <i class="fas fa-home me-3"></i> Sawa Mall, 2nd Floor<br>
+                        <i class="fas fa-home me-3"></i>Sawa Mall, 2nd Floor<br>
                         <span class="ms-5">Shop B-29, Moi Avenue</span><br>
                         <span class="ms-5">Nairobi, Kenya</span>
                     </p>
