@@ -19,7 +19,7 @@
     <meta name="twitter:title" content="{% block twitter_title %}Laptop Place Kenya{% endblock %}">
     <meta name="twitter:description" content="{% block twitter_description %}Refurbished Laptops in Nairobi.{% endblock %}">
     
-    <link rel="shortcut icon" href="https://img.icons8.com/color/48/000000/laptop--v1.png" type="image/png">
+    <link rel="shortcut icon" href="{% static 'core/logo.jpg' %}" type="image/jpeg">
     
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -27,9 +27,10 @@
     
     <style>
         :root {
-            --kenya-green: #006838;
-            --kenya-gold: #f3ce13;
-            --kenya-black: #000000;
+            /* COLORS EXTRACTED FROM YOUR LOGO */
+            --brand-green: #1B4F2D;  /* Dark Forest Green from the laptop frame */
+            --brand-gold: #F7A800;   /* Golden Yellow from the ring */
+            --brand-black: #000000;
             --tech-grey: #f8f9fa;
         }
         
@@ -41,69 +42,73 @@
             min-height: 100vh;
         }
 
-        /* Navbar */
+        /* --- NAVBAR (Updated to White to blend with Logo) --- */
         .navbar {
-            background-color: var(--kenya-green);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background-color: #ffffff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding-top: 10px;
+            padding-bottom: 10px;
         }
         
-        .navbar-brand {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            color: white !important;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .navbar-brand span {
-            color: var(--kenya-gold);
-        }
-
+        /* Navigation Links (Now Green to contrast with White) */
         .nav-link {
-            color: rgba(255,255,255,0.9) !important;
-            font-weight: 600;
+            color: var(--brand-green) !important;
+            font-weight: 700;
             margin-right: 15px;
             font-size: 0.95rem;
+            text-transform: uppercase;
             transition: color 0.3s;
         }
 
         .nav-link:hover {
-            color: var(--kenya-gold) !important;
+            color: var(--brand-gold) !important;
         }
 
-        /* Dropdown */
+        /* Navbar Toggler (Hamburger Menu) */
+        .navbar-toggler {
+            border-color: var(--brand-green);
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(27, 79, 45, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* Dropdown Menu */
         .dropdown-menu {
             border: none;
             box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-            border-top: 3px solid var(--kenya-gold);
+            border-top: 4px solid var(--brand-gold);
         }
-        
         .dropdown-item:hover {
             background-color: var(--tech-grey);
-            color: var(--kenya-green);
-            font-weight: 600;
+            color: var(--brand-green);
+            font-weight: 700;
+        }
+        .dropdown-header {
+            color: var(--brand-green);
+            font-weight: 800;
         }
 
-        /* Footer */
+        /* --- FOOTER (Updated to Green to match Brand) --- */
         footer {
-            background-color: var(--kenya-black);
+            background-color: var(--brand-green); /* Matches Logo Green */
             color: white;
             padding-top: 3rem;
             margin-top: auto; 
+            border-top: 5px solid var(--brand-gold);
         }
 
         footer a {
             transition: color 0.2s;
         }
         footer a:hover {
-            color: var(--kenya-gold) !important;
+            color: var(--brand-gold) !important;
         }
 
-        /* Buttons */
+        /* --- BUTTONS --- */
         .btn-gold {
-            background-color: var(--kenya-gold);
-            color: var(--kenya-black);
-            font-weight: 700;
+            background-color: var(--brand-gold);
+            color: var(--brand-black);
+            font-weight: 800;
             border: none;
             padding: 10px 25px;
             text-transform: uppercase;
@@ -111,9 +116,23 @@
         }
         
         .btn-gold:hover {
-            background-color: #d4b20a;
-            color: black;
+            background-color: #e09600;
+            color: white;
             transform: scale(1.05);
+        }
+        
+        /* Helper for Green Buttons */
+        .btn-success {
+            background-color: var(--brand-green);
+            border-color: var(--brand-green);
+        }
+        .btn-success:hover {
+            background-color: #143d22;
+            border-color: #143d22;
+        }
+        
+        .text-success {
+            color: var(--brand-green) !important;
         }
 
         /* Card Effects */
@@ -132,10 +151,11 @@
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <i class="fas fa-laptop me-2"></i>Laptop Place <span>KE</span>
+                <img src="{% static 'core/logo.jpg' %}" alt="Laptop Place Kenya" height="65">
             </a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
@@ -146,7 +166,7 @@
                             Laptops
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><h6 class="dropdown-header text-uppercase text-muted small fw-bold">By Type</h6></li>
+                            <li><h6 class="dropdown-header">By Type</h6></li>
                             <li><a class="dropdown-item" href="{% url 'index' %}">All</a></li>
                             <li><a class="dropdown-item" href="{% url 'index' %}?type=X360">X360 / Convertible</a></li>
                             <li><a class="dropdown-item" href="{% url 'index' %}?type=Detachable">Detachable</a></li>
@@ -155,7 +175,7 @@
                             
                             <li><hr class="dropdown-divider"></li>
 
-                            <li><h6 class="dropdown-header text-uppercase text-muted small fw-bold">By Usage</h6></li>
+                            <li><h6 class="dropdown-header">By Usage</h6></li>
                             <li><a class="dropdown-item" href="{% url 'index' %}?usage=Everyday">Everyday Laptops</a></li>
                             <li><a class="dropdown-item" href="{% url 'index' %}?usage=Business">Business/Enterprise</a></li>
                             <li><a class="dropdown-item" href="{% url 'index' %}?usage=Premium">Premium</a></li>
@@ -165,7 +185,7 @@
                             
                             <li><hr class="dropdown-divider"></li>
 
-                            <li><h6 class="dropdown-header text-uppercase text-muted small fw-bold">By Brand</h6></li>
+                            <li><h6 class="dropdown-header">By Brand</h6></li>
                             <li><a class="dropdown-item" href="/?q=HP">HP</a></li>
                             <li><a class="dropdown-item" href="/?q=Dell">Dell</a></li>
                             <li><a class="dropdown-item" href="/?q=Lenovo">Lenovo</a></li>
@@ -185,12 +205,12 @@
         {% endblock %}
     </div>
 
-    <footer class="text-white">
+    <footer>
         <div class="container text-center text-md-start">
             <div class="row text-center text-md-start">
                 
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 fw-bold" style="color: var(--kenya-gold); font-family: 'Montserrat';">
+                    <h5 class="text-uppercase mb-4 fw-bold" style="color: var(--brand-gold); font-family: 'Montserrat';">
                         Laptop Place Kenya
                     </h5>
                     <p>
@@ -199,7 +219,7 @@
                 </div>
 
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 fw-bold text-success">Quick Links</h5>
+                    <h5 class="text-uppercase mb-4 fw-bold" style="color: var(--brand-gold);">Quick Links</h5>
                     <p><a href="{% url 'index' %}" class="text-white text-decoration-none">Home</a></p>
                     <p><a href="/?q=HP" class="text-white text-decoration-none">HP Laptops</a></p>
                     <p><a href="/?q=Dell" class="text-white text-decoration-none">Dell Laptops</a></p>
@@ -207,10 +227,10 @@
                 </div>
 
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
-                    <h5 class="text-uppercase mb-4 fw-bold text-success">Contact Us</h5>
+                    <h5 class="text-uppercase mb-4 fw-bold" style="color: var(--brand-gold);">Contact Us</h5>
                     
                     <div class="d-flex align-items-start mb-3 justify-content-center justify-content-md-start">
-                        <i class="fas fa-home me-3 mt-1"></i>
+                        <i class="fas fa-home me-3 mt-1 text-white"></i>
                         <div class="text-start">
                             Sawa Mall, 2nd Floor<br>
                             Shop B-29, Moi Avenue<br>
@@ -219,12 +239,12 @@
                     </div>
 
                     <div class="d-flex align-items-center mb-3 justify-content-center justify-content-md-start">
-                        <i class="fas fa-envelope me-3"></i>
+                        <i class="fas fa-envelope me-3 text-white"></i>
                         <a href="mailto:laptopplacekenya@gmail.com" class="text-white text-decoration-none">laptopplacekenya@gmail.com</a>
                     </div>
 
                     <div class="d-flex align-items-center justify-content-center justify-content-md-start">
-                        <i class="fas fa-phone me-3"></i>
+                        <i class="fas fa-phone me-3 text-white"></i>
                         <a href="tel:+254723027668" class="text-white text-decoration-none">0723 027668</a>
                     </div>
                 </div>
