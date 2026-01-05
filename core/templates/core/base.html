@@ -28,8 +28,8 @@
     <style>
         :root {
             /* COLORS EXTRACTED FROM YOUR LOGO */
-            --brand-green: #1B4F2D;  /* Dark Forest Green from the laptop frame */
-            --brand-gold: #F7A800;   /* Golden Yellow from the ring */
+            --brand-green: #1B4F2D;  
+            --brand-gold: #F7A800;   
             --brand-black: #000000;
             --tech-grey: #f8f9fa;
         }
@@ -42,7 +42,7 @@
             min-height: 100vh;
         }
 
-        /* --- NAVBAR (Updated to White to blend with Logo) --- */
+        /* --- NAVBAR --- */
         .navbar {
             background-color: #ffffff;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
@@ -50,7 +50,6 @@
             padding-bottom: 10px;
         }
         
-        /* Navigation Links (Now Green to contrast with White) */
         .nav-link {
             color: var(--brand-green) !important;
             font-weight: 700;
@@ -64,7 +63,6 @@
             color: var(--brand-gold) !important;
         }
 
-        /* Navbar Toggler (Hamburger Menu) */
         .navbar-toggler {
             border-color: var(--brand-green);
         }
@@ -72,25 +70,59 @@
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(27, 79, 45, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
         }
 
-        /* Dropdown Menu */
+        /* --- SMART MEGA MENU CSS --- */
         .dropdown-menu {
             border: none;
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
             border-top: 4px solid var(--brand-gold);
+            padding: 20px;
+            border-radius: 0 0 10px 10px;
         }
+
+        @media (min-width: 992px) {
+            .dropdown-menu.mega-menu {
+                width: 750px; /* Wide menu for Desktop */
+                left: 50%;
+                transform: translateX(-50%); /* Center it on screen */
+            }
+        }
+
+        .dropdown-header {
+            color: var(--brand-green);
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 0.85rem;
+            border-bottom: 2px solid var(--brand-gold);
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .dropdown-item {
+            padding: 8px 10px;
+            color: #444;
+            font-weight: 500;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            text-align: center;
+            margin-right: 8px;
+            color: var(--brand-gold);
+        }
+
         .dropdown-item:hover {
             background-color: var(--tech-grey);
             color: var(--brand-green);
-            font-weight: 700;
-        }
-        .dropdown-header {
-            color: var(--brand-green);
-            font-weight: 800;
+            transform: translateX(5px); /* Cool slide effect */
+            transition: all 0.2s;
         }
 
-        /* --- FOOTER (Updated to Green to match Brand) --- */
+        /* --- FOOTER --- */
         footer {
-            background-color: var(--brand-green); /* Matches Logo Green */
+            background-color: var(--brand-green);
             color: white;
             padding-top: 3rem;
             margin-top: auto; 
@@ -121,7 +153,6 @@
             transform: scale(1.05);
         }
         
-        /* Helper for Green Buttons */
         .btn-success {
             background-color: var(--brand-green);
             border-color: var(--brand-green);
@@ -135,11 +166,6 @@
             color: var(--brand-green) !important;
         }
 
-        /* Card Effects */
-        .card {
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: none;
-        }
         .card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
@@ -161,36 +187,48 @@
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
                     
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown position-static">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Laptops
+                            Shop Laptops
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><h6 class="dropdown-header">By Type</h6></li>
-                            <li><a class="dropdown-item" href="{% url 'index' %}">All</a></li>
-                            <li><a class="dropdown-item" href="{% url 'index' %}?type=X360">X360 / Convertible</a></li>
-                            <li><a class="dropdown-item" href="{% url 'index' %}?type=Detachable">Detachable</a></li>
-                            <li><a class="dropdown-item" href="{% url 'index' %}?touchscreen=on">TouchScreen</a></li>
-                            <li><a class="dropdown-item" href="{% url 'index' %}?type=Slim">Slim / Ultrabooks</a></li>
-                            
-                            <li><hr class="dropdown-divider"></li>
+                        <div class="dropdown-menu mega-menu" aria-labelledby="navbarDropdown">
+                            <div class="row g-3">
+                                
+                                <div class="col-lg-4 col-md-12">
+                                    <span class="dropdown-header">By Design</span>
+                                    <ul class="list-unstyled">
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?type=X360"><i class="fas fa-sync-alt"></i> X360 / Convertible</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?type=Slim"><i class="fas fa-feather-alt"></i> Ultra-Slim & Light</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?type=Detachable"><i class="fas fa-tablet-alt"></i> Detachable (2-in-1)</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?touchscreen=on"><i class="fas fa-fingerprint"></i> Touchscreen</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}"><i class="fas fa-laptop"></i> View All Styles</a></li>
+                                    </ul>
+                                </div>
 
-                            <li><h6 class="dropdown-header">By Usage</h6></li>
-                            <li><a class="dropdown-item" href="{% url 'index' %}?usage=Everyday">Everyday Laptops</a></li>
-                            <li><a class="dropdown-item" href="{% url 'index' %}?usage=Business">Business/Enterprise</a></li>
-                            <li><a class="dropdown-item" href="{% url 'index' %}?usage=Premium">Premium</a></li>
-                            <li><a class="dropdown-item" href="{% url 'index' %}?usage=Gaming">Gaming</a></li>
-                            <li><a class="dropdown-item" href="{% url 'index' %}?usage=Student">Student</a></li>
-                            <li><a class="dropdown-item" href="{% url 'index' %}?max_price=25000">Budget-Friendly (Under 25K)</a></li>
-                            
-                            <li><hr class="dropdown-divider"></li>
+                                <div class="col-lg-4 col-md-12">
+                                    <span class="dropdown-header">By Purpose</span>
+                                    <ul class="list-unstyled">
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?usage=Student"><i class="fas fa-graduation-cap"></i> Student & College</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?usage=Gaming"><i class="fas fa-gamepad"></i> Gaming & Graphics</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?usage=Business"><i class="fas fa-briefcase"></i> Business Pro</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?usage=Premium"><i class="fas fa-crown"></i> Premium Executive</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?max_price=25000"><i class="fas fa-tags"></i> Budget (Under 25K)</a></li>
+                                    </ul>
+                                </div>
 
-                            <li><h6 class="dropdown-header">By Brand</h6></li>
-                            <li><a class="dropdown-item" href="/?q=HP">HP</a></li>
-                            <li><a class="dropdown-item" href="/?q=Dell">Dell</a></li>
-                            <li><a class="dropdown-item" href="/?q=Lenovo">Lenovo</a></li>
-                            <li><a class="dropdown-item" href="/?q=Apple">Apple (MacBook)</a></li>
-                        </ul>
+                                <div class="col-lg-4 col-md-12">
+                                    <span class="dropdown-header">By Brand</span>
+                                    <ul class="list-unstyled">
+                                        <li><a class="dropdown-item" href="/?q=HP"><i class="fab fa-windows"></i> HP Laptops</a></li>
+                                        <li><a class="dropdown-item" href="/?q=Dell"><i class="fas fa-desktop"></i> Dell Laptops</a></li>
+                                        <li><a class="dropdown-item" href="/?q=Lenovo"><i class="fas fa-square"></i> Lenovo</a></li>
+                                        <li><a class="dropdown-item" href="/?q=Apple"><i class="fab fa-apple"></i> Apple MacBook</a></li>
+                                        <li><a class="dropdown-item" href="/?q=Microsoft"><i class="fab fa-microsoft"></i> Microsoft Surface</a></li>
+                                    </ul>
+                                </div>
+                                
+                            </div>
+                        </div>
                     </li>
 
                     <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
