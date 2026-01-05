@@ -101,20 +101,21 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION (UPDATED) ---
+# --- STORAGE CONFIGURATION (FINAL FIX) ---
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # Use CompressedManifest to ensure Admin files are found and cached correctly
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        # CHANGED: Using 'CompressedStaticFilesStorage' (No Manifest)
+        # This compresses files but won't crash if an admin icon is missing.
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
 # REQUIRED FOR DJANGO 6.0 COMPATIBILITY
-# The cloudinary library checks this old setting, so we must define it.
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# We match the backend above to ensure plugins don't crash.
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
