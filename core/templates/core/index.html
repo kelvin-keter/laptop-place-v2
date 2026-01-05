@@ -2,17 +2,75 @@
 
 {% block content %}
 
-<header class="text-white text-center py-5 mb-5" style="background: linear-gradient(rgba(0,104,56,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;">
-    <div class="container py-5">
-        <h1 class="display-4 fw-bold" style="font-family: 'Montserrat';">Upgrade Your Hustle</h1>
-        <p class="lead mb-4 mx-auto" style="max-width: 600px;">
-            Premium refurbished laptops for students, developers, and professionals across Kenya. Power without the price tag.
-        </p>
-        <a href="#shop" class="btn btn-gold btn-lg shadow-lg">
-            <i class="fas fa-shopping-cart me-2"></i> Shop Now
-        </a>
+<div id="heroCarousel" class="carousel slide carousel-fade mb-5" data-bs-ride="carousel" data-bs-interval="5000">
+    
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
-</header>
+
+    <div class="carousel-inner">
+        
+        <div class="carousel-item active">
+            <div class="d-flex align-items-center justify-content-center text-center text-white" 
+                 style="height: 600px; background: linear-gradient(rgba(0,104,56,0.7), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;">
+                
+                <div class="container">
+                    <h1 class="display-4 fw-bold animate__animated animate__fadeInDown" style="font-family: 'Montserrat';">Upgrade Your Hustle</h1>
+                    <p class="lead mb-4 mx-auto animate__animated animate__fadeInUp animate__delay-1s" style="max-width: 600px;">
+                        Premium refurbished laptops for students, developers, and professionals across Kenya. Power without the price tag.
+                    </p>
+                    <a href="#shop" class="btn btn-gold btn-lg shadow-lg animate__animated animate__zoomIn animate__delay-1s">
+                        <i class="fas fa-shopping-cart me-2"></i> Shop Now
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="d-flex align-items-center justify-content-center text-center text-white" 
+                 style="height: 600px; background: linear-gradient(rgba(0,104,56,0.7), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;">
+                
+                <div class="container">
+                    <h1 class="display-4 fw-bold" style="font-family: 'Montserrat';">Power for Programmers</h1>
+                    <p class="lead mb-4 mx-auto" style="max-width: 600px;">
+                        High-performance machines with 16GB+ RAM and SSDs. Perfect for coding and rendering.
+                    </p>
+                    <a href="{% url 'index' %}?ram=16GB" class="btn btn-outline-light btn-lg shadow-lg">
+                        View Developer Laptops
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="d-flex align-items-center justify-content-center text-center text-white" 
+                 style="height: 600px; background: linear-gradient(rgba(0,104,56,0.7), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;">
+                
+                <div class="container">
+                    <h1 class="display-4 fw-bold" style="font-family: 'Montserrat';">Student Friendly Prices</h1>
+                    <p class="lead mb-4 mx-auto" style="max-width: 600px;">
+                        Affordable, reliable laptops for assignments and research. Get the best deals in Juja.
+                    </p>
+                    <a href="{% url 'index' %}?max_price=30000" class="btn btn-gold btn-lg shadow-lg">
+                        See Budget Deals
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
 
 <section class="container mb-5">
     <div class="row text-center g-4">
