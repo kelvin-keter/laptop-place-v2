@@ -85,11 +85,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# MANUAL OVERRIDE: Explicitly tell Django to look in our new root 'static' folder
+# 1. Look for static files in our custom folder (Logo, Theme CSS)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
+# 2. Look for static files inside Django Apps (Admin CSS)
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -105,21 +106,21 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION (THE FINAL FIX) ---
+# --- STORAGE CONFIGURATION (THE FIX) ---
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # FIXED: Use standard Django storage. 
-        # WhiteNoise removed 'WhiteNoiseStorage', so we use the default.
-        # The Middleware (above) will still serve the files perfectly.
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        # FIXED: Use CompressedStaticFilesStorage.
+        # This handles compression correctly for WhiteNoise but won't crash 
+        # like 'Manifest' storage if a file is missing.
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
 # REQUIRED FOR DJANGO 6.0 COMPATIBILITY
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
