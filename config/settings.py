@@ -81,20 +81,15 @@ TIME_ZONE = 'Africa/Nairobi'
 USE_I18N = True
 USE_TZ = True
 
-# --- STATIC FILES CONFIGURATION (THE FIX) ---
+# --- STATIC FILES CONFIGURATION ---
 STATIC_URL = '/static/'
-
-# This is where collectstatic will put ALL files (Admin + Your Logo)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# This is where your custom logo lives
+# MANUAL OVERRIDE: Explicitly tell Django to look in our new root 'static' folder
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# This finder list ensures Django looks in BOTH:
-# 1. Your 'static' folder (for the logo)
-# 2. Django's internal folders (for Admin CSS)
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -110,19 +105,21 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION ---
+# --- STORAGE CONFIGURATION (THE FINAL FIX) ---
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # Using basic WhiteNoise storage to serve files without compression crashing
-        "BACKEND": "whitenoise.storage.WhiteNoiseStorage",
+        # FIXED: Use standard Django storage. 
+        # WhiteNoise removed 'WhiteNoiseStorage', so we use the default.
+        # The Middleware (above) will still serve the files perfectly.
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
 # REQUIRED FOR DJANGO 6.0 COMPATIBILITY
-STATICFILES_STORAGE = 'whitenoise.storage.WhiteNoiseStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
