@@ -245,7 +245,8 @@
 {% if featured_products and not request.GET %}
 <section class="container mb-5">
     <h3 class="fw-bold mb-4 text-center" style="font-family: 'Montserrat', sans-serif;">Featured Professional Selections</h3>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-lg-5 g-4">
+    
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-lg-4 g-4 justify-content-center">
         {% for item in featured_products %}
         <div class="col">
             <div class="card h-100 border-0 shadow-sm hover-effect">
