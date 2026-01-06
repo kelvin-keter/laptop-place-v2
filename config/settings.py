@@ -85,6 +85,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# MANUAL OVERRIDE: Explicitly tell Django to look in our new root 'static' folder
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 # Explicitly tell Django how to find files
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
@@ -107,9 +112,8 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # CHANGED: Use Django's standard storage.
+        # Use Django's standard storage.
         # This copies files safely without crashing on missing icons or compression errors.
-        # WhiteNoise Middleware (above) will still serve them effectively.
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
