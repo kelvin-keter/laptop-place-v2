@@ -21,11 +21,24 @@
                     
                     {% if messages %}
                         {% for message in messages %}
-                            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm" role="alert">
-                                <i class="fas fa-check-circle me-2"></i> {{ message }}
+                            <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %} alert-dismissible fade show border-0 shadow-sm" role="alert">
+                                {{ message }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             </div>
                         {% endfor %}
+                    {% endif %}
+
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <strong>Please correct the following errors:</strong>
+                            <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ field.label }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            </ul>
+                        </div>
                     {% endif %}
 
                     <form method="post" enctype="multipart/form-data">
@@ -33,12 +46,12 @@
                         
                         <h6 class="text-uppercase fw-bold text-muted mb-3 border-bottom pb-2">Product Identity</h6>
                         <div class="mb-3">
-                            <label class="fw-bold small">Product Name</label>
+                            <label class="fw-bold small">Product Name *</label>
                             {{ form.name }}
                         </div>
                         <div class="row g-2 mb-3">
                             <div class="col-md-6">
-                                <label class="fw-bold small">Brand Category</label>
+                                <label class="fw-bold small">Brand Category *</label>
                                 {{ form.category }}
                             </div>
                             <div class="col-md-6">
@@ -49,7 +62,7 @@
 
                         <div class="row g-2 mb-4">
                             <div class="col-md-6">
-                                <label class="fw-bold small text-success">Selling Price (KES)</label>
+                                <label class="fw-bold small text-success">Selling Price (KES) *</label>
                                 {{ form.price }}
                             </div>
                             <div class="col-md-6">
@@ -86,10 +99,22 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="fw-bold small">Laptop Image</label>
-                            {{ form.image }}
+                        <div class="p-3 bg-light rounded mb-4 border">
+                            <h6 class="fw-bold text-dark"><i class="fas fa-images me-2"></i>Product Photos</h6>
+                            
+                            <div class="mb-3">
+                                <label class="fw-bold small text-danger">1. Main Cover Image *</label>
+                                {{ form.image }}
+                                <small class="text-muted d-block">This image will be shown on the homepage.</small>
+                            </div>
+
+                            <div class="mb-0">
+                                <label class="fw-bold small text-primary">2. Gallery Images (Select Multiple)</label>
+                                {{ form.gallery_images }}
+                                <small class="text-muted d-block">Hold <strong>CTRL</strong> (Windows) or <strong>CMD</strong> (Mac) to select multiple photos.</small>
+                            </div>
                         </div>
+
                         <div class="mb-4">
                             <label class="fw-bold small">Full Description</label>
                             {{ form.description }}

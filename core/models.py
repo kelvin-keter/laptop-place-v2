@@ -104,3 +104,11 @@ class Review(models.Model):
     
     def stars_range(self):
         return range(self.rating)
+
+# --- NEW: PRODUCT GALLERY (FOR MULTIPLE PHOTOS) ---
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='product_gallery/')
+    
+    def __str__(self):
+        return f"Gallery Image for {self.product.name}"

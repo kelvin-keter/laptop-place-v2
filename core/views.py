@@ -2,8 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
-from .models import Product, Category
-from .forms import ProductUploadForm  # Import the new form
+# UPDATED IMPORTS: Added ProductImage
+from .models import Product, Category, ProductImage
+from .forms import ProductUploadForm
 
 def index(request):
     products = Product.objects.filter(in_stock=True)
@@ -79,16 +80,35 @@ def contact(request):
 def about(request):
     return render(request, 'core/about.html')
 
-# --- NEW: STAFF UPLOAD VIEW ---
+# --- STAFF UPLOAD VIEW (UPDATED FOR GALLERY) ---
 @user_passes_test(lambda u: u.is_staff, login_url='/admin/login/')
 def upload_product(request):
     if request.method == 'POST':
-        # request.FILES is required to handle image uploads
         form = ProductUploadForm(request.POST, request.FILES)
+        
         if form.is_valid():
+            # 1. Save the main product first
             product = form.save()
-            messages.success(request, f'✅ SUCCESS: "{product.name}" is now live on the site!')
-            return redirect('upload_product') # Reload page to allow adding another
+            
+            # 2. Handle the Multiple Gallery Images
+            # We look for the field 'gallery_images' which we defined in forms.py
+            gallery_files = request.FILES.getlist('gallery_images')
+            
+            for f in gallery_files:
+                # Create a new ProductImage entry for each file
+                ProductImage.objects.create(product=product, image=f)
+            
+            # Success Message
+            msg = f'✅ SUCCESS: "{product.name}" uploaded successfully!'
+            if gallery_files:
+                msg += f' (Added {len(gallery_files)} gallery photos)'
+            
+            messages.success(request, msg)
+            return redirect('upload_product')
+        else:
+            # ERROR HANDLING: If form is invalid, show an error message
+            messages.error(request, '❌ Upload Failed. Please check the form for errors below.')
+            
     else:
         form = ProductUploadForm()
     
