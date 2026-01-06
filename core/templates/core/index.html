@@ -6,74 +6,126 @@
 <style>
     /* 1. Base Slider Layout */
     .hero-slide {
-        height: 550px;
+        height: 600px; /* Slightly taller for a more commanding presence */
         display: flex;
         align-items: center;
         justify-content: center;
-        text-align: center;
+        text-align: left; /* Left-aligned text is more corporate */
         background-size: cover;
         background-position: center;
         position: relative;
     }
 
-    /* 2. THE OVERLAY TRICK 
-       We use a strong linear-gradient ON TOP of the image to dim it.
-       This ensures text is always readable.
-    */
+    /* 2. THEMES: Professional Gradients & Images */
+    /* We use a consistent, sophisticated dark overlay to ensure text readability and a premium feel. */
 
-    /* Slide 1: Brand (Green Theme) - Professional Desk Background */
-    .slide-brand {
+    /* Slide 1: The Brand (Modern Corporate Office) */
+    .slide-corporate-1 {
         background-image: 
-            linear-gradient(rgba(27, 79, 45, 0.85), rgba(0, 0, 0, 0.7)), /* Strong Green Tint */
-            url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            linear-gradient(to right, rgba(27, 79, 45, 0.9), rgba(0, 0, 0, 0.6)), /* Brand Green to subtle dark */
+            url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
     }
 
-    /* Slide 2: Gaming (Dark/Orange Theme) - RGB Keyboard Background */
-    .slide-gaming {
+    /* Slide 2: Performance & Power (High-Tech/Architecture) */
+    .slide-corporate-2 {
         background-image: 
-            linear-gradient(rgba(0, 0, 0, 0.85), rgba(20, 20, 20, 0.9)), /* Very Dark for Gaming */
-            url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(45, 45, 45, 0.7)), /* Deep, sleek dark tone */
+            url('https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+        background-position: center top;
     }
 
-    /* Slide 3: Student (Gold/Warm Theme) - Library/Study Background */
-    .slide-student {
+    /* Slide 3: Professional Lifestyle (Modern Kenyan Professional) */
+    .slide-corporate-3 {
         background-image: 
-            linear-gradient(rgba(0, 0, 0, 0.7), rgba(184, 134, 11, 0.6)), /* Dark overlay with Gold hint */
-            url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            linear-gradient(to right, rgba(247, 168, 0, 0.85), rgba(0, 0, 0, 0.7)), /* Warm Gold to dark */
+            url('https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
     }
     
-    /* Slide 4: Business (Teal/Cool Theme) - Modern Office Background */
-    .slide-business {
+    /* Slide 4: Smart Investment (Sleek Design & Value) */
+    .slide-corporate-4 {
         background-image: 
-            linear-gradient(rgba(0, 77, 64, 0.8), rgba(0, 0, 0, 0.8)), /* Professional Teal Tint */
-            url('https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            linear-gradient(to right, rgba(0, 77, 64, 0.9), rgba(0, 0, 0, 0.7)), /* Professional Teal/Blue-Green */
+            url('https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
     }
 
-    /* 3. Text Visibility - Making it POP */
+    /* 3. Typography & Buttons */
+    .hero-container {
+        max-width: 1200px;
+        padding: 0 20px;
+        width: 100%;
+    }
+
+    .hero-badge {
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+    }
+
     .hero-title {
         font-family: 'Montserrat', sans-serif;
         font-weight: 800;
         font-size: 3.5rem;
-        text-transform: uppercase;
-        margin-bottom: 20px;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
         color: #ffffff;
-        /* Heavy shadow to separate text from image details */
-        text-shadow: 0 4px 15px rgba(0,0,0,0.9);
     }
 
     .hero-subtitle {
-        font-size: 1.3rem;
-        font-weight: 600;
-        color: #f0f0f0;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.9);
-        max-width: 700px;
-        margin: 0 auto 30px auto;
+        font-size: 1.25rem;
+        font-weight: 400;
+        color: #e0e0e0;
+        max-width: 650px;
+        margin-bottom: 2.5rem;
+    }
+
+    .btn-hero {
+        padding: 12px 35px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border-radius: 4px; /* Slightly more squared for a professional look */
+        transition: all 0.3s ease;
+    }
+    
+    .btn-hero-gold {
+        background-color: var(--brand-gold);
+        color: var(--brand-black);
+        border: none;
+    }
+    .btn-hero-gold:hover {
+        background-color: #e09600;
+        transform: translateY(-3px);
+    }
+
+    .btn-hero-outline-light {
+        border: 2px solid rgba(255,255,255,0.8);
+        color: #ffffff;
+    }
+    .btn-hero-outline-light:hover {
+        background-color: #ffffff;
+        color: var(--brand-black);
+        border-color: #ffffff;
+        transform: translateY(-3px);
+    }
+
+    /* Carousel Indicators */
+    .carousel-indicators [data-bs-target] {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: rgba(255,255,255,0.5);
+        margin: 0 6px;
+    }
+    .carousel-indicators .active {
+        background-color: var(--brand-gold);
     }
 </style>
 
-<div id="heroCarousel" class="carousel slide carousel-fade mb-5" data-bs-ride="carousel" data-bs-interval="5000">
+<div id="heroCarousel" class="carousel slide carousel-fade mb-5" data-bs-ride="carousel" data-bs-interval="6000">
     
-    <div class="carousel-indicators">
+    <div class="carousel-indicators mb-4">
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
@@ -83,65 +135,61 @@
     <div class="carousel-inner text-white">
         
         <div class="carousel-item active">
-            <div class="hero-slide slide-brand">
-                <div class="container">
-                    <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill fw-bold shadow">WELCOME TO LAPTOP PLACE</span>
-                    <h1 class="hero-title">Upgrade Your <span style="color: var(--brand-gold);">Hustle</span></h1>
+            <div class="hero-slide slide-corporate-1">
+                <div class="hero-container">
+                    <span class="badge bg-warning text-dark hero-badge shadow-sm">Premier Tech Partner</span>
+                    <h1 class="hero-title">Nairobi's Source for <br>Professional Laptops</h1>
                     <p class="hero-subtitle">
-                        Premium refurbished laptops for professionals & creatives.<br>
-                        Top-tier quality at Nairobi's best prices.
+                        Empowering Kenya's businesses and professionals with certified, high-quality machines you can trust.
                     </p>
-                    <a href="#shop" class="btn btn-gold btn-lg shadow-lg px-5 py-3 rounded-pill">
-                        Shop Now <i class="fas fa-arrow-right ms-2"></i>
+                    <a href="#shop" class="btn btn-hero btn-hero-gold shadow-lg">
+                        Explore Our Collection
                     </a>
                 </div>
             </div>
         </div>
 
         <div class="carousel-item">
-            <div class="hero-slide slide-gaming">
-                <div class="container">
-                    <span class="badge bg-danger text-white mb-3 px-3 py-2 rounded-pill fw-bold shadow">GAMING BEASTS</span>
-                    <h1 class="hero-title">Unleash <span style="border-bottom: 5px solid var(--brand-gold);">Power</span></h1>
+            <div class="hero-slide slide-corporate-2">
+                <div class="hero-container">
+                    <span class="badge bg-light text-dark hero-badge shadow-sm">Engineered for Power</span>
+                    <h1 class="hero-title">Drive Your Business <br>Forward</h1>
                     <p class="hero-subtitle">
-                        High-performance rigs for Coding, Rendering & Gaming.<br>
-                        16GB+ RAM | SSD Storage | Dedicated NVIDIA Graphics.
+                        Discover high-performance workstations and enterprise-grade laptops built for demanding workflows.
                     </p>
-                    <div class="d-flex justify-content-center gap-3">
-                        <a href="{% url 'index' %}?usage=Gaming" class="btn btn-gold btn-lg rounded-pill shadow">View Gaming</a>
-                        <a href="{% url 'index' %}?ram=16GB" class="btn btn-outline-light btn-lg rounded-pill shadow">Developer Specs</a>
+                    <div class="d-flex gap-3">
+                        <a href="{% url 'index' %}?usage=Business" class="btn btn-hero btn-hero-gold shadow">View Business Laptops</a>
+                        <a href="{% url 'index' %}?ram=16GB" class="btn btn-hero btn-hero-outline-light shadow">Shop High-Spec</a>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="carousel-item">
-            <div class="hero-slide slide-student">
-                <div class="container">
-                    <span class="badge bg-light text-dark mb-3 px-3 py-2 rounded-pill fw-bold shadow">BACK TO SCHOOL</span>
-                    <h1 class="hero-title">Student <span style="color: var(--brand-gold);">Deals</span></h1>
+            <div class="hero-slide slide-corporate-3">
+                <div class="hero-container">
+                    <span class="badge bg-dark text-warning hero-badge shadow-sm">Smart Investment</span>
+                    <h1 class="hero-title">Premium Quality, <br>Exceptional Value</h1>
                     <p class="hero-subtitle">
-                        Reliable laptops for assignments & research starting from <strong>KES 18,000</strong>.<br>
-                        Get sorted for the semester today.
+                        Get the technology you need to succeed without compromising on quality or your budget.
                     </p>
-                    <a href="{% url 'index' %}?usage=Student" class="btn btn-gold btn-lg px-5 py-3 rounded-pill shadow">
-                        See Student Laptops
+                    <a href="{% url 'index' %}?max_price=35000" class="btn btn-hero btn-hero-gold shadow">
+                        See Our Best Deals
                     </a>
                 </div>
             </div>
         </div>
 
         <div class="carousel-item">
-            <div class="hero-slide slide-business">
-                <div class="container">
-                    <span class="badge bg-info text-dark mb-3 px-3 py-2 rounded-pill fw-bold shadow">ENTERPRISE READY</span>
-                    <h1 class="hero-title">Executive <span style="font-weight: 300;">Class</span></h1>
+            <div class="hero-slide slide-corporate-4">
+                <div class="hero-container">
+                    <span class="badge bg-info text-dark hero-badge shadow-sm">Designed for Mobility</span>
+                    <h1 class="hero-title">Elegance Meets <br>Efficiency</h1>
                     <p class="hero-subtitle">
-                        Sleek, lightweight, and powerful Ultrabooks. <br>
-                        Perfect for meetings, travel, and business productivity.
+                        Sleek, lightweight ultrabooks perfect for the modern professional on the move in Nairobi and beyond.
                     </p>
-                    <a href="{% url 'index' %}?usage=Business" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill shadow">
-                        Browse Premium
+                    <a href="{% url 'index' %}?type=Slim" class="btn btn-hero btn-hero-outline-light shadow">
+                        Browse Ultrabooks
                     </a>
                 </div>
             </div>
@@ -162,22 +210,22 @@
         <div class="col-md-4">
             <div class="p-4 bg-white rounded shadow-sm h-100 border-bottom border-4 border-success">
                 <i class="fas fa-truck fa-3x text-success mb-3"></i>
-                <h5 class="fw-bold">Fast Delivery</h5>
-                <p class="text-muted small">Same-day delivery within Nairobi. Countrywide shipping available.</p>
+                <h5 class="fw-bold">Countrywide Delivery</h5>
+                <p class="text-muted small">Fast and secure shipping to Nairobi and across Kenya.</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="p-4 bg-white rounded shadow-sm h-100 border-bottom border-4 border-warning">
                 <i class="fas fa-shield-alt fa-3x text-warning mb-3"></i>
-                <h5 class="fw-bold">6-Month Warranty</h5>
-                <p class="text-muted small">Peace of mind with every purchase. We stand by our machines.</p>
+                <h5 class="fw-bold">Reliable Warranty</h5>
+                <p class="text-muted small">Every purchase is backed by our comprehensive 6-month guarantee.</p>
             </div>
         </div>
         <div class="col-md-4">
             <div class="p-4 bg-white rounded shadow-sm h-100 border-bottom border-4 border-primary">
-                <i class="fas fa-comments fa-3x text-primary mb-3"></i>
-                <h5 class="fw-bold">Expert Support</h5>
-                <p class="text-muted small">Not sure what you need? We guide students and professionals daily.</p>
+                <i class="fas fa-headset fa-3x text-primary mb-3"></i>
+                <h5 class="fw-bold">Expert Consultation</h5>
+                <p class="text-muted small">Get personalized advice to find the perfect machine for your needs.</p>
             </div>
         </div>
     </div>
@@ -185,13 +233,13 @@
 
 {% if featured_products and not request.GET %}
 <section class="container mb-5">
-    <h3 class="fw-bold mb-4 text-center">🔥 Hot Deals of the Week</h3>
+    <h3 class="fw-bold mb-4 text-center" style="font-family: 'Montserrat', sans-serif;">Featured Professional Selections</h3>
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for item in featured_products %}
         <div class="col">
-            <div class="card h-100 border-0 shadow hover-effect">
+            <div class="card h-100 border-0 shadow-sm hover-effect">
                 <div class="position-absolute top-0 start-0 m-3">
-                    <span class="badge bg-danger shadow-sm">BEST DEAL</span>
+                    <span class="badge bg-success shadow-sm">TOP PICK</span>
                 </div>
                 
                 {% if item.image %}
@@ -205,7 +253,7 @@
                 <div class="card-body text-center">
                     <h5 class="fw-bold">{{ item.name }}</h5>
                     <p class="text-success fw-bold fs-5">KES {{ item.price }}</p>
-                    <a href="{% url 'product_detail' item.id %}" class="btn btn-outline-dark rounded-pill btn-sm">View Deal</a>
+                    <a href="{% url 'product_detail' item.id %}" class="btn btn-outline-dark rounded-1 btn-sm px-4">View Details</a>
                 </div>
             </div>
         </div>
@@ -316,14 +364,14 @@
 
         <div class="col-md-9">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2 class="fw-bold border-start border-4 border-success ps-3 mb-0">Laptops</h2>
+                <h2 class="fw-bold border-start border-4 border-success ps-3 mb-0" style="font-family: 'Montserrat', sans-serif;">Available Laptops</h2>
                 <span class="text-muted small">{{ products.count }} results found</span>
             </div>
             
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 {% for product in products %}
                 <div class="col">
-                    <div class="card h-100 shadow-sm">
+                    <div class="card h-100 shadow-sm hover-effect">
                         {% if product.image %}
                         <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
                         {% else %}
@@ -334,10 +382,10 @@
                         
                         <div class="card-body d-flex flex-column">
                             <div class="mb-2">
-                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-pill">
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 rounded-1">
                                     {{ product.category.name }}
                                 </span>
-                                <span class="badge bg-light text-dark border rounded-pill ms-1">{{ product.ram }}</span>
+                                <span class="badge bg-light text-dark border rounded-1 ms-1">{{ product.ram }}</span>
                             </div>
                             
                             <h5 class="card-title fw-bold" style="font-size: 1.1rem;">{{ product.name }}</h5>
@@ -347,7 +395,7 @@
                             
                             <div class="d-flex justify-content-between align-items-center mt-auto">
                                 <span class="fw-bold text-dark">KES {{ product.price }}</span>
-                                <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-success btn-sm rounded-pill">Details</a>
+                                <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-success btn-sm rounded-1 px-3">Details</a>
                             </div>
                         </div>
                     </div>
@@ -358,7 +406,7 @@
                         <i class="fas fa-search fa-3x mb-3 text-secondary opacity-50"></i>
                         <h4>No laptops found</h4>
                         <p>Try adjusting your filters.</p>
-                        <a href="{% url 'index' %}" class="btn btn-success">View All Laptops</a>
+                        <a href="{% url 'index' %}" class="btn btn-success rounded-1">View All Laptops</a>
                     </div>
                 </div>
                 {% endfor %}
