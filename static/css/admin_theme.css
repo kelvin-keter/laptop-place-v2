@@ -1,0 +1,41 @@
+/* static/css/admin_theme.css */
+:root {
+    /* PRIMARY BRAND COLORS (Green) */
+    --primary: #1B4F2D;
+    --primary-fg: #fff;
+    
+    /* SECONDARY/ACCENT COLORS (Gold/Darker Green) */
+    --secondary: #143d22;
+    --accent: #F7A800;
+    
+    /* BUTTONS */
+    --button-bg: #1B4F2D;
+    --button-fg: #fff;
+    --button-hover-bg: #143d22;
+    
+    /* LINKS */
+    --link-fg: #1B4F2D;
+    --link-hover-fg: #F7A800;
+    
+    /* HEADER */
+    --header-bg: #1B4F2D;
+    --header-color: #F7A800; /* Gold text for the "Laptop Place" title */
+}
+
+/* Force the header link (Logo text) to be Gold */
+#site-name a {
+    color: var(--accent) !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Make "Save" buttons Green */
+.submit-row input[type=submit] {
+    background: var(--button-bg);
+}
+
+/* Make "Save" buttons darken on hover */
+.submit-row input[type=submit]:hover {
+    background: var(--button-hover-bg);
+}

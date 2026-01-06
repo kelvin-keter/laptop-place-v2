@@ -19,11 +19,19 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    # --- LOAD CUSTOM THEME CSS ---
+    class Media:
+        css = {
+            'all': ('css/admin_theme.css',)
+        }
+
     # 1. LIST VIEW
     list_display = ('name', 'price', 'condition', 'ram', 'category', 'is_featured', 'in_stock')
+    list_per_page = 20  # Show 20 items per page instead of 100 for cleaner look
     
-    # 2. FILTERS
-    list_filter = ('category', 'condition', 'in_stock', 'is_featured', 'ram', 'touchscreen', 'storage_type')
+    # 2. FILTERS (Added ordering for better UX)
+    list_filter = ('category', 'condition', 'in_stock', 'is_featured', 'ram', 'touchscreen')
+    ordering = ('-id',)  # Newest items first
     
     # 3. SEARCH
     search_fields = ('name', 'description', 'processor')
@@ -32,6 +40,8 @@ class ProductAdmin(admin.ModelAdmin):
     list_editable = ('price', 'in_stock', 'is_featured', 'condition')
     
     # 5. FORM LAYOUT
+    save_on_top = True  # Puts a "Save" button at the top of the page too
+    
     fieldsets = (
         ('Basic Information', {
             'fields': ('category', 'name', 'image', 'description')
