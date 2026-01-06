@@ -39,10 +39,10 @@
         background-position: center top;
     }
 
-    /* Slide 3: Professional Lifestyle (CHANGED gradient from Gold to Blue) */
+    /* Slide 3: Professional Lifestyle (Blue gradient) */
     .slide-corporate-3 {
         background-image: 
-            linear-gradient(to right, rgba(0, 191, 255, 0.85), rgba(0, 0, 0, 0.7)), /* Blue gradient */
+            linear-gradient(to right, rgba(0, 191, 255, 0.85), rgba(0, 0, 0, 0.7)),
             url('https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
     }
     
@@ -60,7 +60,6 @@
         width: 100%;
     }
 
-    /* UPDATED: Badges now use the blue accent */
     .hero-badge {
         font-size: 0.9rem;
         letter-spacing: 1px;
@@ -68,10 +67,10 @@
         margin-bottom: 1.5rem;
         display: inline-block;
         background-color: var(--hero-accent-blue) !important;
-        color: #000 !important; /* Black text contrasts well with light blue */
+        color: #000 !important;
         font-weight: 700;
         padding: 0.5em 1em;
-        border-radius: 50rem; /* Rounded pill shape */
+        border-radius: 50rem;
     }
 
     .hero-title {
@@ -100,7 +99,6 @@
         transition: all 0.3s ease;
     }
     
-    /* UPDATED: Main button now uses Blue */
     .btn-hero-accent {
         background-color: var(--hero-accent-blue);
         color: var(--brand-black);
@@ -131,7 +129,6 @@
         background-color: rgba(255,255,255,0.5);
         margin: 0 6px;
     }
-    /* UPDATED: Active indicator is now Blue */
     .carousel-indicators .active {
         background-color: var(--hero-accent-blue);
     }
@@ -248,7 +245,7 @@
 {% if featured_products and not request.GET %}
 <section class="container mb-5">
     <h3 class="fw-bold mb-4 text-center" style="font-family: 'Montserrat', sans-serif;">Featured Professional Selections</h3>
-    <div class="row row-cols-1 row-cols-md-3 g-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 row-cols-lg-5 g-4">
         {% for item in featured_products %}
         <div class="col">
             <div class="card h-100 border-0 shadow-sm hover-effect">
@@ -257,17 +254,17 @@
                 </div>
                 
                 {% if item.image %}
-                <img src="{{ item.image.url }}" class="card-img-top p-3" alt="{{ item.name }}" style="height: 250px; object-fit: contain;">
+                <img src="{{ item.image.url }}" class="card-img-top p-3" alt="{{ item.name }}" style="height: 200px; object-fit: contain;">
                 {% else %}
-                <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 250px;">
+                <div class="d-flex align-items-center justify-content-center bg-light text-muted" style="height: 200px;">
                     <i class="fas fa-camera fa-3x"></i>
                 </div>
                 {% endif %}
                 
                 <div class="card-body text-center">
-                    <h5 class="fw-bold">{{ item.name }}</h5>
+                    <h5 class="fw-bold" style="font-size: 1rem;">{{ item.name }}</h5>
                     <p class="text-success fw-bold fs-5">KES {{ item.price }}</p>
-                    <a href="{% url 'product_detail' item.id %}" class="btn btn-outline-dark rounded-1 btn-sm px-4">View Details</a>
+                    <a href="{% url 'product_detail' item.id %}" class="btn btn-outline-dark rounded-1 btn-sm px-3">View Details</a>
                 </div>
             </div>
         </div>
