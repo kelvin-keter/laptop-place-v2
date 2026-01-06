@@ -24,6 +24,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    
+    # NEW: Helper for adding commas to numbers
+    'django.contrib.humanize',
 
     # Our Apps
     'core',
