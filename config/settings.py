@@ -106,21 +106,20 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION (THE FIX) ---
+# --- STORAGE CONFIGURATION (SAFE MODE) ---
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # FIXED: Use CompressedStaticFilesStorage.
-        # This handles compression correctly for WhiteNoise but won't crash 
-        # like 'Manifest' storage if a file is missing.
-        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
+        # FIXED: Revert to standard Django storage to prevent build crashes.
+        # WhiteNoise Middleware (enabled above) will still serve the files.
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
 # REQUIRED FOR DJANGO 6.0 COMPATIBILITY
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
