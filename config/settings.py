@@ -81,16 +81,20 @@ TIME_ZONE = 'Africa/Nairobi'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+# --- STATIC FILES CONFIGURATION (THE FIX) ---
 STATIC_URL = '/static/'
+
+# This is where collectstatic will put ALL files (Admin + Your Logo)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# MANUAL OVERRIDE: Explicitly tell Django to look in our new root 'static' folder
+# This is where your custom logo lives
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-# Explicitly tell Django how to find files
+# This finder list ensures Django looks in BOTH:
+# 1. Your 'static' folder (for the logo)
+# 2. Django's internal folders (for Admin CSS)
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -106,21 +110,19 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION (FINAL STABLE FIX) ---
+# --- STORAGE CONFIGURATION ---
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # Use Django's standard storage.
-        # This copies files safely without crashing on missing icons or compression errors.
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        # Using basic WhiteNoise storage to serve files without compression crashing
+        "BACKEND": "whitenoise.storage.WhiteNoiseStorage",
     },
 }
 
 # REQUIRED FOR DJANGO 6.0 COMPATIBILITY
-# We match the backend above to ensure plugins don't crash.
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.WhiteNoiseStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
