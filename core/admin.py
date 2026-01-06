@@ -45,7 +45,8 @@ class ProductAdmin(admin.ModelAdmin):
         }
 
     # 1. LIST VIEW (What you see on the dashboard)
-    list_display = ('image_preview', 'name', 'price_display', 'category', 'condition', 'in_stock', 'is_featured')
+    # FIXED: Replaced 'price_display' with 'price' so it can be edited.
+    list_display = ('image_preview', 'name', 'price', 'category', 'condition', 'in_stock', 'is_featured')
     list_display_links = ('image_preview', 'name') # Click image or name to edit
     list_per_page = 20
     
@@ -57,6 +58,7 @@ class ProductAdmin(admin.ModelAdmin):
     actions = [duplicate_products]
     
     # 4. QUICK EDIT (Change these without opening the product)
+    # NOTE: All fields here MUST be in 'list_display' above.
     list_editable = ('price', 'in_stock', 'is_featured')
     
     # 5. FORM LAYOUT (Grouping fields logically)
@@ -100,11 +102,6 @@ class ProductAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" />', obj.image.url)
         return "No Image"
     image_preview.short_description = "Image"
-
-    def price_display(self, obj):
-        return f"KES {obj.price:,}"
-    price_display.short_description = "Price"
-    price_display.admin_order_field = 'price'
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
