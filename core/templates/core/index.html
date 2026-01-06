@@ -4,47 +4,52 @@
 {% block content %}
 
 <style>
+    /* --- NEW COLOR VARIABLE FOR THIS SECTION --- */
+    :root {
+        --hero-accent-blue: #00BFFF; /* Deep Sky Blue for a professional pop */
+        --hero-accent-blue-dark: #009ACD; /* Darker shade for hover states */
+    }
+
     /* 1. Base Slider Layout */
     .hero-slide {
-        height: 600px; /* Slightly taller for a more commanding presence */
+        height: 600px;
         display: flex;
         align-items: center;
         justify-content: center;
-        text-align: left; /* Left-aligned text is more corporate */
+        text-align: left;
         background-size: cover;
         background-position: center;
         position: relative;
     }
 
     /* 2. THEMES: Professional Gradients & Images */
-    /* We use a consistent, sophisticated dark overlay to ensure text readability and a premium feel. */
-
-    /* Slide 1: The Brand (Modern Corporate Office) */
+    
+    /* Slide 1: The Brand (Green remains as base, but accents will be blue) */
     .slide-corporate-1 {
         background-image: 
-            linear-gradient(to right, rgba(27, 79, 45, 0.9), rgba(0, 0, 0, 0.6)), /* Brand Green to subtle dark */
+            linear-gradient(to right, rgba(27, 79, 45, 0.9), rgba(0, 0, 0, 0.6)),
             url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
     }
 
-    /* Slide 2: Performance & Power (High-Tech/Architecture) */
+    /* Slide 2: Performance & Power (Dark Theme) */
     .slide-corporate-2 {
         background-image: 
-            linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(45, 45, 45, 0.7)), /* Deep, sleek dark tone */
+            linear-gradient(to right, rgba(0, 0, 0, 0.85), rgba(45, 45, 45, 0.7)),
             url('https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
         background-position: center top;
     }
 
-    /* Slide 3: Professional Lifestyle (Modern Kenyan Professional) */
+    /* Slide 3: Professional Lifestyle (CHANGED gradient from Gold to Blue) */
     .slide-corporate-3 {
         background-image: 
-            linear-gradient(to right, rgba(247, 168, 0, 0.85), rgba(0, 0, 0, 0.7)), /* Warm Gold to dark */
+            linear-gradient(to right, rgba(0, 191, 255, 0.85), rgba(0, 0, 0, 0.7)), /* Blue gradient */
             url('https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
     }
     
-    /* Slide 4: Smart Investment (Sleek Design & Value) */
+    /* Slide 4: Smart Investment (Teal/Blue-Green Theme) */
     .slide-corporate-4 {
         background-image: 
-            linear-gradient(to right, rgba(0, 77, 64, 0.9), rgba(0, 0, 0, 0.7)), /* Professional Teal/Blue-Green */
+            linear-gradient(to right, rgba(0, 77, 64, 0.9), rgba(0, 0, 0, 0.7)),
             url('https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
     }
 
@@ -55,12 +60,18 @@
         width: 100%;
     }
 
+    /* UPDATED: Badges now use the blue accent */
     .hero-badge {
         font-size: 0.9rem;
         letter-spacing: 1px;
         text-transform: uppercase;
         margin-bottom: 1.5rem;
         display: inline-block;
+        background-color: var(--hero-accent-blue) !important;
+        color: #000 !important; /* Black text contrasts well with light blue */
+        font-weight: 700;
+        padding: 0.5em 1em;
+        border-radius: 50rem; /* Rounded pill shape */
     }
 
     .hero-title {
@@ -85,17 +96,19 @@
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        border-radius: 4px; /* Slightly more squared for a professional look */
+        border-radius: 4px;
         transition: all 0.3s ease;
     }
     
-    .btn-hero-gold {
-        background-color: var(--brand-gold);
+    /* UPDATED: Main button now uses Blue */
+    .btn-hero-accent {
+        background-color: var(--hero-accent-blue);
         color: var(--brand-black);
         border: none;
     }
-    .btn-hero-gold:hover {
-        background-color: #e09600;
+    .btn-hero-accent:hover {
+        background-color: var(--hero-accent-blue-dark);
+        color: #ffffff;
         transform: translateY(-3px);
     }
 
@@ -118,8 +131,9 @@
         background-color: rgba(255,255,255,0.5);
         margin: 0 6px;
     }
+    /* UPDATED: Active indicator is now Blue */
     .carousel-indicators .active {
-        background-color: var(--brand-gold);
+        background-color: var(--hero-accent-blue);
     }
 </style>
 
@@ -137,12 +151,12 @@
         <div class="carousel-item active">
             <div class="hero-slide slide-corporate-1">
                 <div class="hero-container">
-                    <span class="badge bg-warning text-dark hero-badge shadow-sm">Premier Tech Partner</span>
+                    <span class="badge hero-badge shadow-sm">Premier Tech Partner</span>
                     <h1 class="hero-title">Nairobi's Source for <br>Professional Laptops</h1>
                     <p class="hero-subtitle">
                         Empowering Kenya's businesses and professionals with certified, high-quality machines you can trust.
                     </p>
-                    <a href="#shop" class="btn btn-hero btn-hero-gold shadow-lg">
+                    <a href="#shop" class="btn btn-hero btn-hero-accent shadow-lg">
                         Explore Our Collection
                     </a>
                 </div>
@@ -152,13 +166,13 @@
         <div class="carousel-item">
             <div class="hero-slide slide-corporate-2">
                 <div class="hero-container">
-                    <span class="badge bg-light text-dark hero-badge shadow-sm">Engineered for Power</span>
+                    <span class="badge hero-badge shadow-sm">Engineered for Power</span>
                     <h1 class="hero-title">Drive Your Business <br>Forward</h1>
                     <p class="hero-subtitle">
                         Discover high-performance workstations and enterprise-grade laptops built for demanding workflows.
                     </p>
                     <div class="d-flex gap-3">
-                        <a href="{% url 'index' %}?usage=Business" class="btn btn-hero btn-hero-gold shadow">View Business Laptops</a>
+                        <a href="{% url 'index' %}?usage=Business" class="btn btn-hero btn-hero-accent shadow">View Business Laptops</a>
                         <a href="{% url 'index' %}?ram=16GB" class="btn btn-hero btn-hero-outline-light shadow">Shop High-Spec</a>
                     </div>
                 </div>
@@ -168,12 +182,12 @@
         <div class="carousel-item">
             <div class="hero-slide slide-corporate-3">
                 <div class="hero-container">
-                    <span class="badge bg-dark text-warning hero-badge shadow-sm">Smart Investment</span>
+                    <span class="badge hero-badge shadow-sm">Smart Investment</span>
                     <h1 class="hero-title">Premium Quality, <br>Exceptional Value</h1>
                     <p class="hero-subtitle">
                         Get the technology you need to succeed without compromising on quality or your budget.
                     </p>
-                    <a href="{% url 'index' %}?max_price=35000" class="btn btn-hero btn-hero-gold shadow">
+                    <a href="{% url 'index' %}?max_price=35000" class="btn btn-hero btn-hero-accent shadow">
                         See Our Best Deals
                     </a>
                 </div>
@@ -183,7 +197,7 @@
         <div class="carousel-item">
             <div class="hero-slide slide-corporate-4">
                 <div class="hero-container">
-                    <span class="badge bg-info text-dark hero-badge shadow-sm">Designed for Mobility</span>
+                    <span class="badge hero-badge shadow-sm">Designed for Mobility</span>
                     <h1 class="hero-title">Elegance Meets <br>Efficiency</h1>
                     <p class="hero-subtitle">
                         Sleek, lightweight ultrabooks perfect for the modern professional on the move in Nairobi and beyond.
