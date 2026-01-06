@@ -9,7 +9,22 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-key-123')
 # Render sets this to False automatically
 DEBUG = 'RENDER' not in os.environ
 
-ALLOWED_HOSTS = ['*']
+# --- 1. SECURITY UPDATE: DOMAIN WHITELIST ---
+ALLOWED_HOSTS = [
+    'laptopplacekenya.com',       # Your Root Domain
+    'www.laptopplacekenya.com',   # Your WWW Domain
+    '.onrender.com',              # Allows Render subdomains (e.g. laptop-place.onrender.com)
+    '127.0.0.1',                  # Localhost
+    'localhost',
+]
+
+# --- 2. SECURITY UPDATE: FORM TRUST ---
+# Essential for login/upload forms to work on your new domain
+CSRF_TRUSTED_ORIGINS = [
+    'https://laptopplacekenya.com',
+    'https://www.laptopplacekenya.com',
+    'https://*.onrender.com',
+]
 
 INSTALLED_APPS = [
     # 3rd Party (MUST be at the top)
