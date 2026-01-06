@@ -4,39 +4,48 @@
 {% block content %}
 
 <style>
-    /* 1. Make the slider tall and centered */
+    /* 1. Base Slider Style */
     .hero-slide {
         height: 550px;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
+        /* Crucial: Ensures the image and color cover the whole area */
         background-size: cover;
         background-position: center;
         position: relative;
+        /* Crucial: Blends the gradient color with the image behind it */
+        background-blend-mode: overlay; 
     }
 
-    /* 2. THEMES: The "Colorful Designs" */
+    /* 2. THEMES: Gradients blended with Images */
     
-    /* Slide 1: The Brand (Deep Green & Gold) */
+    /* Slide 1: The Brand (Professional Desk) */
     .slide-brand {
-        background: linear-gradient(135deg, #1B4F2D 0%, #0d2b16 100%);
+        /* Gradient first, then the image URL */
+        background-image: linear-gradient(135deg, rgba(27, 79, 45, 0.9) 0%, rgba(13, 43, 22, 0.95) 100%), 
+                          url('https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
     }
 
-    /* Slide 2: Gaming/Power (Dark Tech Look) */
+    /* Slide 2: Gaming (Red/Orange Gaming Setup) */
     .slide-gaming {
-        background: linear-gradient(45deg, #1a1a1a 0%, #2d2d2d 50%, #F7A800 100%);
+        background-image: linear-gradient(45deg, rgba(26, 26, 26, 0.95) 0%, rgba(45, 45, 45, 0.9) 50%, rgba(247, 168, 0, 0.8) 100%),
+                          url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
     }
 
-    /* Slide 3: Student/Budget (Bright & Friendly Gold) */
+    /* Slide 3: Student (Bright Library/Study) - Uses 'multiply' for better contrast on yellow */
     .slide-student {
-        background: linear-gradient(to right, #F7A800, #fcc200);
-        color: #000 !important; /* Black text for readability on yellow */
+        background-image: linear-gradient(to right, #F7A800, #fcc200),
+                          url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+        background-blend-mode: multiply; /* Different blend mode for bright colors */
+        color: #000 !important;
     }
     
-    /* Slide 4: Business/Premium (Professional Blue-Green) */
+    /* Slide 4: Business (Modern Architecture/Office) */
     .slide-business {
-        background: linear-gradient(120deg, #004d40 0%, #1B4F2D 100%);
+        background-image: linear-gradient(120deg, rgba(0, 77, 64, 0.9) 0%, rgba(27, 79, 45, 0.9) 100%),
+                          url('https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
     }
 
     /* 3. Typography & Decorations */
@@ -46,13 +55,13 @@
         font-size: 3.5rem;
         text-transform: uppercase;
         margin-bottom: 20px;
-        text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        /* Stronger shadow for readability over images */
+        text-shadow: 0 4px 20px rgba(0,0,0,0.6);
     }
     
-    /* For the Student slide (Light background), remove shadow or make it subtle */
     .slide-student .hero-title, .slide-student p {
         text-shadow: none;
-        color: #000;
+        color: #2c2c2c;
     }
     .slide-student .btn-outline-light {
         color: #000;
@@ -63,26 +72,13 @@
         color: #F7A800;
     }
 
-    /* Circle Decoration in background (Abstract Art) */
+    /* Subtle overlay pattern to unify the look (optional) */
     .hero-slide::before {
         content: '';
         position: absolute;
-        top: -50px;
-        right: -50px;
-        width: 300px;
-        height: 300px;
-        background: rgba(255,255,255,0.1);
-        border-radius: 50%;
-    }
-    .hero-slide::after {
-        content: '';
-        position: absolute;
-        bottom: -50px;
-        left: -50px;
-        width: 200px;
-        height: 200px;
-        background: rgba(255,255,255,0.05);
-        border-radius: 50%;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.2); /* Slight dark tint over everything */
+        z-index: 1;
     }
 </style>
 
@@ -100,9 +96,9 @@
         <div class="carousel-item active">
             <div class="hero-slide slide-brand">
                 <div class="container position-relative" style="z-index: 2;">
-                    <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill fw-bold">WELCOME TO LAPTOP PLACE</span>
+                    <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill fw-bold shadow">WELCOME TO LAPTOP PLACE</span>
                     <h1 class="hero-title">Upgrade Your<br><span style="color: var(--brand-gold);">Hustle</span></h1>
-                    <p class="lead mb-4 mx-auto" style="max-width: 600px; font-size: 1.25rem;">
+                    <p class="lead mb-4 mx-auto fw-semibold" style="max-width: 600px; font-size: 1.25rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
                         Premium refurbished laptops for professionals & creatives.<br>
                         Quality you can trust, prices you can afford.
                     </p>
@@ -117,13 +113,13 @@
             <div class="hero-slide slide-gaming">
                 <div class="container position-relative" style="z-index: 2;">
                     <h1 class="hero-title">Unleash <span class="text-white border-bottom border-warning border-4">Power</span></h1>
-                    <p class="lead mb-4 mx-auto" style="max-width: 600px;">
+                    <p class="lead mb-4 mx-auto fw-semibold" style="max-width: 600px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
                         High-performance machines for Coding, Rendering & Gaming.<br>
                         16GB+ RAM | SSD Storage | Dedicated Graphics
                     </p>
                     <div class="d-flex justify-content-center gap-3">
-                        <a href="{% url 'index' %}?usage=Gaming" class="btn btn-gold btn-lg rounded-pill">View Gaming</a>
-                        <a href="{% url 'index' %}?ram=16GB" class="btn btn-outline-light btn-lg rounded-pill">Developer Specs</a>
+                        <a href="{% url 'index' %}?usage=Gaming" class="btn btn-gold btn-lg rounded-pill shadow">View Gaming</a>
+                        <a href="{% url 'index' %}?ram=16GB" class="btn btn-outline-light btn-lg rounded-pill shadow">Developer Specs</a>
                     </div>
                 </div>
             </div>
@@ -132,13 +128,13 @@
         <div class="carousel-item">
             <div class="hero-slide slide-student">
                 <div class="container position-relative" style="z-index: 2;">
-                    <span class="badge bg-black text-warning mb-3 px-3 py-2 rounded-pill fw-bold">BACK TO SCHOOL</span>
+                    <span class="badge bg-black text-warning mb-3 px-3 py-2 rounded-pill fw-bold shadow">BACK TO SCHOOL</span>
                     <h1 class="hero-title text-dark">Student <span class="text-white bg-black px-2">Deals</span></h1>
                     <p class="lead mb-4 mx-auto text-dark fw-bold" style="max-width: 600px;">
                         Reliable laptops for assignments & research starting from KES 18,000.<br>
                         Get sorted for the semester today.
                     </p>
-                    <a href="{% url 'index' %}?usage=Student" class="btn btn-dark btn-lg px-5 py-3 rounded-pill">
+                    <a href="{% url 'index' %}?usage=Student" class="btn btn-dark btn-lg px-5 py-3 rounded-pill shadow">
                         See Student Laptops
                     </a>
                 </div>
@@ -149,11 +145,11 @@
             <div class="hero-slide slide-business">
                 <div class="container position-relative" style="z-index: 2;">
                     <h1 class="hero-title">Executive <span style="font-weight: 300;">Class</span></h1>
-                    <p class="lead mb-4 mx-auto" style="max-width: 600px;">
+                    <p class="lead mb-4 mx-auto fw-semibold" style="max-width: 600px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
                         Sleek, lightweight, and powerful. <br>
                         Perfect for meetings, travel, and enterprise work.
                     </p>
-                    <a href="{% url 'index' %}?usage=Business" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill">
+                    <a href="{% url 'index' %}?usage=Business" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill shadow">
                         Browse Premium
                     </a>
                 </div>
