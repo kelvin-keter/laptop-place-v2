@@ -9,8 +9,11 @@ from .forms import ProductUploadForm
 def index(request):
     products = Product.objects.filter(in_stock=True)
     categories = Category.objects.all()
-    # Featured: Get top 4 for the 4-column layout
-    featured_products = Product.objects.filter(in_stock=True, is_featured=True)[:4]
+    
+    # --- FEATURED SECTION FIX ---
+    # We order by '-created_at' (Newest First) before slicing [:4].
+    # This guarantees the laptop you just uploaded shows up!
+    featured_products = Product.objects.filter(in_stock=True, is_featured=True).order_by('-created_at')[:4]
 
     # --- 1. SEARCH ---
     q = request.GET.get('q')
@@ -80,7 +83,7 @@ def contact(request):
 def about(request):
     return render(request, 'core/about.html')
 
-# --- STAFF UPLOAD VIEW (UPDATED FOR GALLERY) ---
+# --- STAFF UPLOAD VIEW ---
 @user_passes_test(lambda u: u.is_staff, login_url='/admin/login/')
 def upload_product(request):
     if request.method == 'POST':
@@ -91,11 +94,9 @@ def upload_product(request):
             product = form.save()
             
             # 2. Handle the Multiple Gallery Images
-            # We look for the field 'gallery_images' which we defined in forms.py
             gallery_files = request.FILES.getlist('gallery_images')
             
             for f in gallery_files:
-                # Create a new ProductImage entry for each file
                 ProductImage.objects.create(product=product, image=f)
             
             # Success Message
@@ -106,7 +107,7 @@ def upload_product(request):
             messages.success(request, msg)
             return redirect('upload_product')
         else:
-            # ERROR HANDLING: If form is invalid, show an error message
+            # ERROR HANDLING
             messages.error(request, '❌ Upload Failed. Please check the form for errors below.')
             
     else:
