@@ -96,6 +96,11 @@ STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 ]
 
+# --- WHITENOISE CONFIGURATION ---
+# This is the "Safety Net". If files aren't in STATIC_ROOT, look in the apps.
+# This fixes the "broken admin style" issue when using standard storage.
+WHITENOISE_USE_FINDERS = True
+
 # Media Files (User Uploads)
 MEDIA_URL = '/media/'
 
@@ -106,14 +111,13 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION (SAFE MODE) ---
+# --- STORAGE CONFIGURATION (SAFE & STABLE) ---
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # FIXED: Revert to standard Django storage to prevent build crashes.
-        # WhiteNoise Middleware (enabled above) will still serve the files.
+        # Use Standard Storage (No crash on build)
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
