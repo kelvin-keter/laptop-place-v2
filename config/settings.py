@@ -31,7 +31,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware', # Critical for Admin Styles
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Critical: This serves the files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -101,21 +101,22 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'tOdPXLziEQMeOyDR3yJXdv0Wp-s',
 }
 
-# --- STORAGE CONFIGURATION (SAFE MODE) ---
+# --- STORAGE CONFIGURATION (FINAL STABLE FIX) ---
 STORAGES = {
     "default": {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # CHANGED: Use basic WhiteNoiseStorage. 
-        # This serves files correctly but skips the compression step that is crashing.
-        "BACKEND": "whitenoise.storage.WhiteNoiseStorage",
+        # CHANGED: Use Django's standard storage.
+        # This copies files safely without crashing on missing icons or compression errors.
+        # WhiteNoise Middleware (above) will still serve them effectively.
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
 # REQUIRED FOR DJANGO 6.0 COMPATIBILITY
 # We match the backend above to ensure plugins don't crash.
-STATICFILES_STORAGE = 'whitenoise.storage.WhiteNoiseStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
