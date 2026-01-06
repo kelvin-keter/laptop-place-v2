@@ -1,0 +1,126 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-7">
+            
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header text-white p-4" style="background-color: var(--brand-green);">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="mb-0 fw-bold"><i class="fas fa-cloud-upload-alt me-2"></i> Upload Inventory</h3>
+                            <p class="mb-0 opacity-75 small">Add a new laptop to the website</p>
+                        </div>
+                        <a href="{% url 'index' %}" class="btn btn-sm btn-outline-light rounded-pill">View Site</a>
+                    </div>
+                </div>
+                
+                <div class="card-body p-4 bg-white">
+                    
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm" role="alert">
+                                <i class="fas fa-check-circle me-2"></i> {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <h6 class="text-uppercase fw-bold text-muted mb-3 border-bottom pb-2">Product Identity</h6>
+                        <div class="mb-3">
+                            <label class="fw-bold small">Product Name</label>
+                            {{ form.name }}
+                        </div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="fw-bold small">Brand Category</label>
+                                {{ form.category }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fw-bold small">Condition</label>
+                                {{ form.condition }}
+                            </div>
+                        </div>
+
+                        <div class="row g-2 mb-4">
+                            <div class="col-md-6">
+                                <label class="fw-bold small text-success">Selling Price (KES)</label>
+                                {{ form.price }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="fw-bold small text-muted">Old Price (Optional)</label>
+                                {{ form.old_price }}
+                            </div>
+                        </div>
+                        
+                        <h6 class="text-uppercase fw-bold text-muted mb-3 border-bottom pb-2">Technical Specs</h6>
+                        <div class="row g-2 mb-3">
+                            <div class="col-6">
+                                <label class="small fw-bold">Processor</label>
+                                {{ form.processor }}
+                            </div>
+                            <div class="col-6">
+                                <label class="small fw-bold">RAM</label>
+                                {{ form.ram }}
+                            </div>
+                            <div class="col-6">
+                                <label class="small fw-bold">Storage</label>
+                                {{ form.storage }}
+                            </div>
+                            <div class="col-6">
+                                <label class="small fw-bold">Type</label>
+                                {{ form.storage_type }}
+                            </div>
+                            <div class="col-6">
+                                <label class="small fw-bold">Screen Size</label>
+                                {{ form.screen_size }}
+                            </div>
+                             <div class="col-6">
+                                <label class="small fw-bold">Usage Type</label>
+                                {{ form.usage }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="fw-bold small">Laptop Image</label>
+                            {{ form.image }}
+                        </div>
+                        <div class="mb-4">
+                            <label class="fw-bold small">Full Description</label>
+                            {{ form.description }}
+                        </div>
+
+                        <div class="d-flex flex-wrap gap-4 mb-4 p-3 bg-light rounded border">
+                            <div class="form-check">
+                                {{ form.in_stock }}
+                                <label class="form-check-label small">In Stock</label>
+                            </div>
+                            <div class="form-check">
+                                {{ form.is_featured }}
+                                <label class="form-check-label small">Feature on Home</label>
+                            </div>
+                            <div class="form-check">
+                                {{ form.touchscreen }}
+                                <label class="form-check-label small">Touchscreen</label>
+                            </div>
+                            <div class="form-check">
+                                {{ form.backlit_keyboard }}
+                                <label class="form-check-label small">Backlit Key</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-gold w-100 py-3 rounded-pill shadow fw-bold text-uppercase">
+                            <i class="fas fa-plus me-2"></i> Upload to Website
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

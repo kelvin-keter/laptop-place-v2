@@ -1,13 +1,17 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib import messages
 from .models import Product, Category
+from .forms import ProductUploadForm  # Import the new form
 
 def index(request):
     products = Product.objects.filter(in_stock=True)
     categories = Category.objects.all()
-    featured_products = Product.objects.filter(in_stock=True, is_featured=True)[:3]
+    # Featured: Get top 4 for the 4-column layout
+    featured_products = Product.objects.filter(in_stock=True, is_featured=True)[:4]
 
-    # --- 1. SEARCH (Name or Category) ---
+    # --- 1. SEARCH ---
     q = request.GET.get('q')
     if q:
         products = products.filter(
@@ -16,7 +20,7 @@ def index(request):
             Q(description__icontains=q)
         )
 
-    # --- 2. EXISTING FILTERS ---
+    # --- 2. FILTERS ---
     cat = request.GET.get('category')
     if cat:
         products = products.filter(category__name=cat)
@@ -40,7 +44,7 @@ def index(request):
     if touch == 'on':
         products = products.filter(touchscreen=True)
 
-    # --- 3. NEW FILTERS (Usage & Type) ---
+    # --- 3. NEW FILTERS ---
     usage = request.GET.get('usage')
     if usage:
         products = products.filter(usage=usage)
@@ -53,20 +57,19 @@ def index(request):
         'products': products,
         'featured_products': featured_products,
         'categories': categories,
-        
-        # Keep filter state in the form/URL
         'selected_ram': ram,
         'selected_condition': cond,
         'selected_touchscreen': touch,
         'selected_max_price': price,
         'selected_category': cat,
-        'selected_usage': usage,  # New
-        'selected_type': l_type,  # New
+        'selected_usage': usage,
+        'selected_type': l_type,
     }
     return render(request, 'core/index.html', context)
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
+    # Related: same category, excluding current one
     related = Product.objects.filter(category=product.category).exclude(pk=pk)[:3]
     return render(request, 'core/product_detail.html', {'product': product, 'related_products': related})
 
@@ -75,3 +78,18 @@ def contact(request):
 
 def about(request):
     return render(request, 'core/about.html')
+
+# --- NEW: STAFF UPLOAD VIEW ---
+@user_passes_test(lambda u: u.is_staff, login_url='/admin/login/')
+def upload_product(request):
+    if request.method == 'POST':
+        # request.FILES is required to handle image uploads
+        form = ProductUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            product = form.save()
+            messages.success(request, f'✅ SUCCESS: "{product.name}" is now live on the site!')
+            return redirect('upload_product') # Reload page to allow adding another
+    else:
+        form = ProductUploadForm()
+    
+    return render(request, 'core/upload_product.html', {'form': form})

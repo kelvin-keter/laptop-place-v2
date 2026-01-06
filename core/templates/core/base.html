@@ -238,6 +238,14 @@
                         </div>
                     </li>
 
+                    {% if user.is_staff %}
+                    <li class="nav-item">
+                        <a class="nav-link text-danger fw-bold" href="{% url 'upload_product' %}">
+                            <i class="fas fa-plus-circle"></i> Upload
+                        </a>
+                    </li>
+                    {% endif %}
+
                     <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
                     <li class="nav-item"><a class="btn btn-gold btn-sm ms-3 rounded-pill" href="{% url 'contact' %}">Contact Us</a></li>
                 </ul>
