@@ -3,7 +3,90 @@
 
 {% block content %}
 
-<div id="heroCarousel" class="carousel slide carousel-fade mb-5" data-bs-ride="carousel" data-bs-interval="4000">
+<style>
+    /* 1. Make the slider tall and centered */
+    .hero-slide {
+        height: 550px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+    }
+
+    /* 2. THEMES: The "Colorful Designs" */
+    
+    /* Slide 1: The Brand (Deep Green & Gold) */
+    .slide-brand {
+        background: linear-gradient(135deg, #1B4F2D 0%, #0d2b16 100%);
+    }
+
+    /* Slide 2: Gaming/Power (Dark Tech Look) */
+    .slide-gaming {
+        background: linear-gradient(45deg, #1a1a1a 0%, #2d2d2d 50%, #F7A800 100%);
+    }
+
+    /* Slide 3: Student/Budget (Bright & Friendly Gold) */
+    .slide-student {
+        background: linear-gradient(to right, #F7A800, #fcc200);
+        color: #000 !important; /* Black text for readability on yellow */
+    }
+    
+    /* Slide 4: Business/Premium (Professional Blue-Green) */
+    .slide-business {
+        background: linear-gradient(120deg, #004d40 0%, #1B4F2D 100%);
+    }
+
+    /* 3. Typography & Decorations */
+    .hero-title {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 800;
+        font-size: 3.5rem;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    
+    /* For the Student slide (Light background), remove shadow or make it subtle */
+    .slide-student .hero-title, .slide-student p {
+        text-shadow: none;
+        color: #000;
+    }
+    .slide-student .btn-outline-light {
+        color: #000;
+        border-color: #000;
+    }
+    .slide-student .btn-outline-light:hover {
+        background-color: #000;
+        color: #F7A800;
+    }
+
+    /* Circle Decoration in background (Abstract Art) */
+    .hero-slide::before {
+        content: '';
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 300px;
+        height: 300px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+    }
+    .hero-slide::after {
+        content: '';
+        position: absolute;
+        bottom: -50px;
+        left: -50px;
+        width: 200px;
+        height: 200px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+</style>
+
+<div id="heroCarousel" class="carousel slide carousel-fade mb-5" data-bs-ride="carousel" data-bs-interval="5000">
     
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
@@ -12,65 +95,102 @@
         <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
     </div>
 
-    <div class="carousel-inner">
+    <div class="carousel-inner text-white">
         
         <div class="carousel-item active">
-            <a href="{% url 'index' %}?usage=Student">
-                <img src="{% static 'core/banner1.jpg' %}" class="d-block w-100" alt="Back to School Offer" style="max-height: 600px; object-fit: cover;">
-            </a>
+            <div class="hero-slide slide-brand">
+                <div class="container position-relative" style="z-index: 2;">
+                    <span class="badge bg-warning text-dark mb-3 px-3 py-2 rounded-pill fw-bold">WELCOME TO LAPTOP PLACE</span>
+                    <h1 class="hero-title">Upgrade Your<br><span style="color: var(--brand-gold);">Hustle</span></h1>
+                    <p class="lead mb-4 mx-auto" style="max-width: 600px; font-size: 1.25rem;">
+                        Premium refurbished laptops for professionals & creatives.<br>
+                        Quality you can trust, prices you can afford.
+                    </p>
+                    <a href="#shop" class="btn btn-gold btn-lg shadow-lg px-5 py-3 rounded-pill">
+                        Shop Now <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div class="carousel-item">
-            <a href="{% url 'index' %}?usage=Gaming">
-                <img src="{% static 'core/banner2.jpg' %}" class="d-block w-100" alt="Gaming Laptops" style="max-height: 600px; object-fit: cover;">
-            </a>
+            <div class="hero-slide slide-gaming">
+                <div class="container position-relative" style="z-index: 2;">
+                    <h1 class="hero-title">Unleash <span class="text-white border-bottom border-warning border-4">Power</span></h1>
+                    <p class="lead mb-4 mx-auto" style="max-width: 600px;">
+                        High-performance machines for Coding, Rendering & Gaming.<br>
+                        16GB+ RAM | SSD Storage | Dedicated Graphics
+                    </p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{% url 'index' %}?usage=Gaming" class="btn btn-gold btn-lg rounded-pill">View Gaming</a>
+                        <a href="{% url 'index' %}?ram=16GB" class="btn btn-outline-light btn-lg rounded-pill">Developer Specs</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="carousel-item">
-            <a href="{% url 'index' %}?usage=Business">
-                <img src="{% static 'core/banner3.jpg' %}" class="d-block w-100" alt="Business Laptops" style="max-height: 600px; object-fit: cover;">
-            </a>
+            <div class="hero-slide slide-student">
+                <div class="container position-relative" style="z-index: 2;">
+                    <span class="badge bg-black text-warning mb-3 px-3 py-2 rounded-pill fw-bold">BACK TO SCHOOL</span>
+                    <h1 class="hero-title text-dark">Student <span class="text-white bg-black px-2">Deals</span></h1>
+                    <p class="lead mb-4 mx-auto text-dark fw-bold" style="max-width: 600px;">
+                        Reliable laptops for assignments & research starting from KES 18,000.<br>
+                        Get sorted for the semester today.
+                    </p>
+                    <a href="{% url 'index' %}?usage=Student" class="btn btn-dark btn-lg px-5 py-3 rounded-pill">
+                        See Student Laptops
+                    </a>
+                </div>
+            </div>
         </div>
 
         <div class="carousel-item">
-            <a href="{% url 'index' %}?max_price=30000">
-                <img src="{% static 'core/banner4.jpg' %}" class="d-block w-100" alt="Hot Deals" style="max-height: 600px; object-fit: cover;">
-            </a>
+            <div class="hero-slide slide-business">
+                <div class="container position-relative" style="z-index: 2;">
+                    <h1 class="hero-title">Executive <span style="font-weight: 300;">Class</span></h1>
+                    <p class="lead mb-4 mx-auto" style="max-width: 600px;">
+                        Sleek, lightweight, and powerful. <br>
+                        Perfect for meetings, travel, and enterprise work.
+                    </p>
+                    <a href="{% url 'index' %}?usage=Business" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill">
+                        Browse Premium
+                    </a>
+                </div>
+            </div>
         </div>
 
     </div>
 
     <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
     </button>
 </div>
 
 <section class="container mb-5">
     <div class="row text-center g-4">
         <div class="col-md-4">
-            <div class="p-4 bg-white rounded shadow-sm h-100">
+            <div class="p-4 bg-white rounded shadow-sm h-100 border-bottom border-4 border-success">
                 <i class="fas fa-truck fa-3x text-success mb-3"></i>
                 <h5 class="fw-bold">Fast Delivery</h5>
                 <p class="text-muted small">Same-day delivery within Nairobi. Countrywide shipping available.</p>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="p-4 bg-white rounded shadow-sm h-100">
+            <div class="p-4 bg-white rounded shadow-sm h-100 border-bottom border-4 border-warning">
                 <i class="fas fa-shield-alt fa-3x text-warning mb-3"></i>
                 <h5 class="fw-bold">6-Month Warranty</h5>
                 <p class="text-muted small">Peace of mind with every purchase. We stand by our machines.</p>
             </div>
         </div>
         <div class="col-md-4">
-            <div class="p-4 bg-white rounded shadow-sm h-100">
+            <div class="p-4 bg-white rounded shadow-sm h-100 border-bottom border-4 border-primary">
                 <i class="fas fa-comments fa-3x text-primary mb-3"></i>
-                <h5 class="fw-bold">Student Friendly</h5>
-                <p class="text-muted small">Best prices in town. Expert advice for IT & Engineering students.</p>
+                <h5 class="fw-bold">Expert Support</h5>
+                <p class="text-muted small">Not sure what you need? We guide students and professionals daily.</p>
             </div>
         </div>
     </div>
@@ -110,7 +230,6 @@
 
 <section id="shop" class="container mb-5">
     <div class="row">
-        
         <div class="col-md-3 mb-4">
             <div class="card border-0 shadow-sm p-3 sticky-top" style="top: 100px; z-index: 1;">
                 <h5 class="fw-bold mb-3"><i class="fas fa-filter me-2"></i>Filter Inventory</h5>
