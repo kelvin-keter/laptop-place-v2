@@ -39,108 +39,98 @@
             min-height: 100vh;
         }
 
-        /* --- NAVBAR --- */
+        /* --- NAVBAR STYLING --- */
         .navbar {
             background-color: #ffffff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            padding-top: 15px; /* Slightly taller for text logo */
-            padding-bottom: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* Softer, deeper shadow */
+            padding-top: 18px;
+            padding-bottom: 18px;
         }
         
-        /* TEXT LOGO STYLING */
         .navbar-brand {
             font-family: 'Montserrat', sans-serif;
             font-weight: 800;
-            font-size: 1.5rem; /* Large and readable */
+            font-size: 1.6rem;
             color: var(--brand-green) !important;
             letter-spacing: -0.5px;
             text-transform: uppercase;
         }
         
         .nav-link {
-            color: var(--brand-green) !important;
+            color: #444 !important; /* Softer black for links */
             font-weight: 700;
-            margin-right: 15px;
-            font-size: 0.95rem;
+            margin: 0 10px;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            transition: color 0.3s;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+            position: relative;
         }
 
-        .nav-link:hover {
-            color: var(--brand-gold) !important;
+        .nav-link:hover, .nav-link.active {
+            color: var(--brand-green) !important;
         }
 
-        .navbar-toggler {
-            border-color: var(--brand-green);
+        /* Hover underline effect */
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--brand-gold);
+            transition: width 0.3s;
         }
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(27, 79, 45, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        .nav-link:hover::after {
+            width: 100%;
         }
 
-        /* --- SMART MEGA MENU CSS --- */
+        /* --- MEGA MENU --- */
         .dropdown-menu {
             border: none;
-            box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175);
-            border-top: 4px solid var(--brand-gold);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-top: 3px solid var(--brand-gold);
+            border-radius: 0 0 8px 8px;
             padding: 20px;
-            border-radius: 0 0 10px 10px;
         }
 
         @media (min-width: 992px) {
             .dropdown-menu.mega-menu {
-                width: 750px; /* Wide menu for Desktop */
+                width: 800px;
                 left: 50%;
-                transform: translateX(-50%); /* Center it on screen */
+                transform: translateX(-50%);
+                margin-top: 20px; /* Offset from navbar */
             }
         }
 
         .dropdown-header {
             color: var(--brand-green);
-            text-transform: uppercase;
             font-weight: 800;
-            font-size: 0.85rem;
-            border-bottom: 2px solid var(--brand-gold);
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-            display: inline-block;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
         }
 
         .dropdown-item {
-            padding: 8px 10px;
-            color: #444;
-            font-weight: 500;
-            border-radius: 5px;
+            padding: 8px 12px;
             font-size: 0.9rem;
+            color: #555;
+            border-radius: 6px;
+            transition: all 0.2s;
         }
-
+        .dropdown-item:hover {
+            background-color: rgba(27, 79, 45, 0.05); /* Very light green bg */
+            color: var(--brand-green);
+            transform: translateX(5px);
+        }
         .dropdown-item i {
+            color: var(--brand-gold);
             width: 20px;
             text-align: center;
             margin-right: 8px;
-            color: var(--brand-gold);
-        }
-
-        .dropdown-item:hover {
-            background-color: var(--tech-grey);
-            color: var(--brand-green);
-            transform: translateX(5px);
-            transition: all 0.2s;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            background-color: var(--brand-green);
-            color: white;
-            padding-top: 3rem;
-            margin-top: auto; 
-            border-top: 5px solid var(--brand-gold);
-        }
-
-        footer a {
-            transition: color 0.2s;
-        }
-        footer a:hover {
-            color: var(--brand-gold) !important;
         }
 
         /* --- BUTTONS --- */
@@ -149,34 +139,38 @@
             color: var(--brand-black);
             font-weight: 800;
             border: none;
-            padding: 10px 25px;
+            padding: 10px 28px;
             text-transform: uppercase;
-            transition: transform 0.2s, background-color 0.2s;
+            font-size: 0.85rem;
+            border-radius: 50px; /* Pill shape */
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(247, 168, 0, 0.3);
         }
-        
         .btn-gold:hover {
             background-color: #e09600;
             color: white;
-            transform: scale(1.05);
-        }
-        
-        .btn-success {
-            background-color: var(--brand-green);
-            border-color: var(--brand-green);
-        }
-        .btn-success:hover {
-            background-color: #143d22;
-            border-color: #143d22;
-        }
-        
-        .text-success {
-            color: var(--brand-green) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(247, 168, 0, 0.4);
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--brand-green);
+            color: white;
+            padding-top: 4rem;
+            margin-top: auto; 
+            border-top: 5px solid var(--brand-gold);
         }
+        footer a:hover { color: var(--brand-gold) !important; }
+
+        /* --- STAFF DROPDOWN --- */
+        .user-dropdown-toggle {
+            background-color: rgba(27, 79, 45, 0.1);
+            color: var(--brand-green) !important;
+            padding: 8px 16px !important;
+            border-radius: 50px;
+        }
+        .user-dropdown-toggle::after { display: none; /* Hide default styling */ }
     </style>
 </head>
 <body>
@@ -184,95 +178,117 @@
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container">
             <a class="navbar-brand" href="/">
-                LAPTOP PLACE <span style="color: var(--brand-gold);">KENYA</span>
+                Laptop Place <span style="color: var(--brand-gold);">Kenya</span>
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon" style="background-image: url('data:image/svg+xml;charset=utf8,%3Csvg viewBox=\'0 0 30 30\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath stroke=\'%231B4F2D\' stroke-width=\'2.5\' stroke-linecap=\'round\' stroke-miterlimit=\'10\' d=\'M4 7h22M4 15h22M4 23h22\'/%3E%3C/svg%3E');"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+                <ul class="navbar-nav mx-auto align-items-center">
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}">Home</a>
+                    </li>
                     
                     <li class="nav-item dropdown position-static">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Shop Laptops
                         </a>
                         <div class="dropdown-menu mega-menu" aria-labelledby="navbarDropdown">
-                            <div class="row g-3">
-                                
-                                <div class="col-lg-4 col-md-12">
-                                    <span class="dropdown-header">By Design</span>
-                                    <ul class="list-unstyled">
-                                        <li><a class="dropdown-item" href="{% url 'index' %}?type=X360"><i class="fas fa-sync-alt"></i> X360 / Convertible</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'index' %}?type=Slim"><i class="fas fa-feather-alt"></i> Ultra-Slim & Light</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'index' %}?type=Detachable"><i class="fas fa-tablet-alt"></i> Detachable (2-in-1)</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'index' %}?touchscreen=on"><i class="fas fa-fingerprint"></i> Touchscreen</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'index' %}"><i class="fas fa-laptop"></i> View All Styles</a></li>
+                            <div class="row g-4">
+                                <div class="col-lg-4">
+                                    <span class="dropdown-header"><i class="fas fa-pencil-ruler me-2"></i>By Design</span>
+                                    <ul class="list-unstyled mt-2">
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?type=X360">X360 / Convertible</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?type=Slim">Ultra-Slim & Light</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?type=Detachable">Detachable (2-in-1)</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?touchscreen=on">Touchscreen</a></li>
                                     </ul>
                                 </div>
-
-                                <div class="col-lg-4 col-md-12">
-                                    <span class="dropdown-header">By Purpose</span>
-                                    <ul class="list-unstyled">
-                                        <li><a class="dropdown-item" href="{% url 'index' %}?usage=Student"><i class="fas fa-graduation-cap"></i> Student & College</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'index' %}?usage=Gaming"><i class="fas fa-gamepad"></i> Gaming & Graphics</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'index' %}?usage=Business"><i class="fas fa-briefcase"></i> Business Pro</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'index' %}?usage=Premium"><i class="fas fa-crown"></i> Premium Executive</a></li>
-                                        <li><a class="dropdown-item" href="{% url 'index' %}?max_price=25000"><i class="fas fa-tags"></i> Budget (Under 25K)</a></li>
+                                <div class="col-lg-4">
+                                    <span class="dropdown-header"><i class="fas fa-briefcase me-2"></i>By Purpose</span>
+                                    <ul class="list-unstyled mt-2">
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?usage=Student">Student & College</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?usage=Business">Business Pro</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?usage=Gaming">Gaming & Graphics</a></li>
+                                        <li><a class="dropdown-item" href="{% url 'index' %}?max_price=25000">Budget (Under 25K)</a></li>
                                     </ul>
                                 </div>
-
-                                <div class="col-lg-4 col-md-12">
-                                    <span class="dropdown-header">By Brand</span>
-                                    <ul class="list-unstyled">
-                                        <li><a class="dropdown-item" href="/?q=HP"><i class="fab fa-windows"></i> HP Laptops</a></li>
-                                        <li><a class="dropdown-item" href="/?q=Dell"><i class="fas fa-desktop"></i> Dell Laptops</a></li>
-                                        <li><a class="dropdown-item" href="/?q=Lenovo"><i class="fas fa-square"></i> Lenovo</a></li>
-                                        <li><a class="dropdown-item" href="/?q=Apple"><i class="fab fa-apple"></i> Apple MacBook</a></li>
-                                        <li><a class="dropdown-item" href="/?q=Microsoft"><i class="fab fa-microsoft"></i> Microsoft Surface</a></li>
+                                <div class="col-lg-4">
+                                    <span class="dropdown-header"><i class="fas fa-tag me-2"></i>By Brand</span>
+                                    <ul class="list-unstyled mt-2">
+                                        <li><a class="dropdown-item" href="/?q=HP">HP Laptops</a></li>
+                                        <li><a class="dropdown-item" href="/?q=Dell">Dell Laptops</a></li>
+                                        <li><a class="dropdown-item" href="/?q=Lenovo">Lenovo</a></li>
+                                        <li><a class="dropdown-item" href="/?q=Apple">Apple MacBook</a></li>
                                     </ul>
                                 </div>
-                                
                             </div>
                         </div>
                     </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'about' %}">About Us</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav align-items-center gap-3">
+                    
                     {% if user.is_authenticated %}
-                        
-                        <li class="nav-item">
-                            <a class="nav-link text-danger fw-bold" href="{% url 'upload_product' %}">
-                                <i class="fas fa-plus-circle"></i> Upload
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle user-dropdown-toggle d-flex align-items-center gap-2" href="#" id="staffDropdown" role="button" data-bs-toggle="dropdown">
+                                <div class="bg-success rounded-circle text-white d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-size: 14px;">
+                                    {{ user.username|first|upper }}
+                                </div>
+                                <span class="small fw-bold">{{ user.username }}</span>
+                                <i class="fas fa-chevron-down small"></i>
                             </a>
-                        </li>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-3" aria-labelledby="staffDropdown">
+                                <li><h6 class="dropdown-header text-muted">Staff Controls</h6></li>
+                                
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'upload_product' %}">
+                                        <i class="fas fa-cloud-upload-alt text-primary"></i> Upload Inventory
+                                    </a>
+                                </li>
 
-                        {% if user.is_superuser %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'add_staff' %}">
-                                <i class="fas fa-user-plus"></i> Add Staff
-                            </a>
-                        </li>
-                        {% endif %}
+                                {% if user.is_superuser %}
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'add_staff' %}">
+                                        <i class="fas fa-user-plus text-success"></i> Add Staff
+                                    </a>
+                                </li>
+                                {% endif %}
 
-                        <li class="nav-item">
-                            <form action="{% url 'logout' %}" method="post" class="d-inline">
-                                {% csrf_token %}
-                                <button type="submit" class="nav-link btn btn-link text-uppercase" style="text-decoration: none; border: none; background: none; font-weight: 700;">
-                                    Logout
-                                </button>
-                            </form>
+                                <li><hr class="dropdown-divider"></li>
+                                
+                                <li>
+                                    <form action="{% url 'logout' %}" method="post" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item text-danger fw-bold">
+                                            <i class="fas fa-sign-out-alt"></i> Logout
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
                         </li>
-
                     {% else %}
-                        
-                        <li class="nav-item">
+                        <li class="nav-item d-none d-lg-block">
+                            <a class="nav-link text-muted small" href="{% url 'login' %}" style="font-size: 0.8rem;">Staff Login</a>
+                        </li>
+                        <li class="nav-item d-lg-none">
                             <a class="nav-link" href="{% url 'login' %}">Staff Login</a>
                         </li>
-
                     {% endif %}
 
-                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
-                    <li class="nav-item"><a class="btn btn-gold btn-sm ms-3 rounded-pill" href="{% url 'contact' %}">Contact Us</a></li>
+                    <li class="nav-item">
+                        <a class="btn btn-gold shadow-sm" href="{% url 'contact' %}">
+                            Contact Us
+                        </a>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -286,16 +302,12 @@
     <footer>
         <div class="container text-center text-md-start">
             <div class="row text-center text-md-start">
-                
                 <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h5 class="text-uppercase mb-4 fw-bold" style="color: var(--brand-gold); font-family: 'Montserrat';">
                         Laptop Place Kenya
                     </h5>
-                    <p>
-                        Powering Innovators, Students & Professionals with premium new and refurbished machines.
-                    </p>
+                    <p>Powering Innovators, Students & Professionals with premium new and refurbished machines.</p>
                 </div>
-
                 <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
                     <h5 class="text-uppercase mb-4 fw-bold" style="color: var(--brand-gold);">Quick Links</h5>
                     <p><a href="{% url 'index' %}" class="text-white text-decoration-none">Home</a></p>
@@ -303,53 +315,22 @@
                     <p><a href="/?q=Dell" class="text-white text-decoration-none">Dell Laptops</a></p>
                     <p><a href="{% url 'about' %}" class="text-white text-decoration-none">About Us</a></p>
                 </div>
-
                 <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
                     <h5 class="text-uppercase mb-4 fw-bold" style="color: var(--brand-gold);">Contact Us</h5>
-                    
-                    <div class="d-flex align-items-start mb-3 justify-content-center justify-content-md-start">
-                        <i class="fas fa-home me-3 mt-1 text-white"></i>
-                        <div class="text-start">
-                            Sawa Mall, 2nd Floor<br>
-                            Shop B-29, Moi Avenue<br>
-                            Nairobi, Kenya
-                        </div>
-                    </div>
-
                     <div class="d-flex align-items-center mb-3 justify-content-center justify-content-md-start">
                         <i class="fas fa-envelope me-3 text-white"></i>
                         <a href="mailto:laptopplacekenya@gmail.com" class="text-white text-decoration-none">laptopplacekenya@gmail.com</a>
                     </div>
-
                     <div class="d-flex align-items-center justify-content-center justify-content-md-start">
                         <i class="fas fa-phone me-3 text-white"></i>
                         <a href="tel:+254723027668" class="text-white text-decoration-none">0723 027668</a>
                     </div>
                 </div>
             </div>
-
             <hr class="mb-4 opacity-25">
-
             <div class="row align-items-center pb-4">
-                <div class="col-md-7 col-lg-8">
-                    <p class="text-center text-md-start mb-0">
-                        © 2026 <strong>Laptop Place Kenya</strong>. All Rights Reserved.
-                    </p>
-                </div>
-                <div class="col-md-5 col-lg-4">
-                    <div class="text-center text-md-end">
-                        <ul class="list-unstyled list-inline mb-0">
-                            <li class="list-inline-item">
-                                <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-facebook"></i></a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-twitter"></i></a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="#" class="btn-floating btn-sm text-white" style="font-size: 23px;"><i class="fab fa-instagram"></i></a>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="col-12 text-center">
+                    <p class="mb-0">© 2026 <strong>Laptop Place Kenya</strong>. All Rights Reserved.</p>
                 </div>
             </div>
         </div>
