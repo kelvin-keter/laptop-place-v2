@@ -2,7 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
-# UPDATED IMPORTS: Added ProductImage
+# NEW IMPORT: Required for creating users
+from django.contrib.auth.forms import UserCreationForm
+
 from .models import Product, Category, ProductImage
 from .forms import ProductUploadForm
 
@@ -12,7 +14,6 @@ def index(request):
     
     # --- FEATURED SECTION FIX ---
     # We order by '-created_at' (Newest First) before slicing [:4].
-    # This guarantees the laptop you just uploaded shows up!
     featured_products = Product.objects.filter(in_stock=True, is_featured=True).order_by('-created_at')[:4]
 
     # --- 1. SEARCH ---
@@ -73,7 +74,6 @@ def index(request):
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, pk=pk)
-    # Related: same category, excluding current one
     related = Product.objects.filter(category=product.category).exclude(pk=pk)[:3]
     return render(request, 'core/product_detail.html', {'product': product, 'related_products': related})
 
@@ -84,7 +84,7 @@ def about(request):
     return render(request, 'core/about.html')
 
 # --- STAFF UPLOAD VIEW ---
-@user_passes_test(lambda u: u.is_staff, login_url='/admin/login/')
+@user_passes_test(lambda u: u.is_staff, login_url='/login/')
 def upload_product(request):
     if request.method == 'POST':
         form = ProductUploadForm(request.POST, request.FILES)
@@ -114,3 +114,20 @@ def upload_product(request):
         form = ProductUploadForm()
     
     return render(request, 'core/upload_product.html', {'form': form})
+
+# --- NEW: ADD STAFF VIEW (Superuser Only) ---
+@user_passes_test(lambda u: u.is_superuser, login_url='/login/')
+def add_staff(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            # Automatically make them "Staff" so they can access the upload page
+            user.is_staff = True
+            user.save()
+            messages.success(request, f'✅ Staff account created for {user.username}!')
+            return redirect('add_staff')
+    else:
+        form = UserCreationForm()
+    
+    return render(request, 'core/add_staff.html', {'form': form})

@@ -238,12 +238,37 @@
                         </div>
                     </li>
 
-                    {% if user.is_staff %}
-                    <li class="nav-item">
-                        <a class="nav-link text-danger fw-bold" href="{% url 'upload_product' %}">
-                            <i class="fas fa-plus-circle"></i> Upload
-                        </a>
-                    </li>
+                    {% if user.is_authenticated %}
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-danger fw-bold" href="{% url 'upload_product' %}">
+                                <i class="fas fa-plus-circle"></i> Upload
+                            </a>
+                        </li>
+
+                        {% if user.is_superuser %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'add_staff' %}">
+                                <i class="fas fa-user-plus"></i> Add Staff
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        <li class="nav-item">
+                            <form action="{% url 'logout' %}" method="post" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link btn btn-link text-uppercase" style="text-decoration: none; border: none; background: none; font-weight: 700;">
+                                    Logout
+                                </button>
+                            </form>
+                        </li>
+
+                    {% else %}
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}">Staff Login</a>
+                        </li>
+
                     {% endif %}
 
                     <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
