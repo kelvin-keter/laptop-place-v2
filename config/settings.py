@@ -27,20 +27,23 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 INSTALLED_APPS = [
-    # 3rd Party (MUST be at the top)
+    # --- 1. NEW: JAZZMIN ADMIN THEME (MUST BE AT THE TOP) ---
+    'jazzmin',
+
+    # 3rd Party
     'cloudinary_storage',
     'cloudinary',
     'whitenoise.runserver_nostatic',
 
     # Django Default Apps
     'django.contrib.staticfiles',
-    'django.contrib.admin',
+    'django.contrib.admin',         # Jazzmin must be loaded BEFORE this
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     
-    # NEW: Helper for adding commas to numbers
+    # Helper for adding commas to numbers
     'django.contrib.humanize',
 
     # Our Apps
@@ -115,8 +118,6 @@ STATICFILES_FINDERS = [
 ]
 
 # --- WHITENOISE CONFIGURATION ---
-# This is the "Safety Net". If files aren't in STATIC_ROOT, look in the apps.
-# This fixes the "broken admin style" issue when using standard storage.
 WHITENOISE_USE_FINDERS = True
 
 # Media Files (User Uploads)
@@ -135,12 +136,10 @@ STORAGES = {
         "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
-        # Use Standard Storage (No crash on build)
         "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 
-# REQUIRED FOR DJANGO 6.0 COMPATIBILITY
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -151,5 +150,49 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
 
 # --- AUTHENTICATION REDIRECTS ---
-# When a user logs in, send them to the Staff Dashboard
 LOGIN_REDIRECT_URL = 'dashboard'
+
+# --- 2. NEW: JAZZMIN CONFIGURATION ---
+JAZZMIN_SETTINGS = {
+    "site_title": "Laptop Place Admin",
+    "site_header": "Laptop Place Kenya",
+    "site_logo": None, 
+    "welcome_sign": "Welcome to Laptop Place HQ",
+    "copyright": "Laptop Place Kenya Ltd",
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "core.Product": "fas fa-laptop",
+        "core.Category": "fas fa-tag",
+        "core.Review": "fas fa-star",
+    },
+    "show_ui_builder": False,
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar_small_text": False,
+    "footer_small_text": False,
+    "body_small_text": False,
+    "brand_small_text": False,
+    "brand_colour": "navbar-success",
+    "accent": "accent-success",
+    "navbar": "navbar-success navbar-dark",
+    "no_navbar_border": False,
+    "navbar_fixed": False,
+    "layout_boxed": False,
+    "footer_fixed": False,
+    "sidebar_fixed": True,
+    "sidebar": "sidebar-light-success",
+    "sidebar_nav_small_text": False,
+    "theme": "flatly",
+    "dark_mode_theme": None,
+    "button_classes": {
+        "primary": "btn-success",
+        "secondary": "btn-outline-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
+}
