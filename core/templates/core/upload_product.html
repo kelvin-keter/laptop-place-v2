@@ -3,154 +3,157 @@
 
 {% block content %}
 <div class="container py-5">
+    
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark" style="font-family: 'Montserrat', sans-serif;">
+                <i class="fas fa-cloud-upload-alt text-success me-2"></i> Upload Inventory
+            </h2>
+            <p class="text-muted mb-0">Add new stock to the catalog. Fields marked (*) are required.</p>
+        </div>
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-sm">
+            <i class="fas fa-arrow-left me-2"></i> Back to Dashboard
+        </a>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %} alert-dismissible fade show shadow-sm" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
     <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-7">
-            
-            <div class="card shadow-lg border-0 rounded-3">
-                <div class="card-header text-white p-4" style="background-color: var(--brand-green);">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h3 class="mb-0 fw-bold"><i class="fas fa-cloud-upload-alt me-2"></i> Upload Inventory</h3>
-                            <p class="mb-0 opacity-75 small">Add a new laptop to the website</p>
-                        </div>
-                        <a href="{% url 'index' %}" class="btn btn-sm btn-outline-light rounded-pill">View Site</a>
-                    </div>
+        <div class="col-lg-10">
+            <div class="card border-0 shadow-lg rounded-3 overflow-hidden">
+                <div class="card-header bg-success text-white py-3">
+                    <h5 class="mb-0 fw-bold"><i class="fas fa-laptop me-2"></i> Product Details</h5>
                 </div>
                 
-                <div class="card-body p-4 bg-white">
-                    
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %} alert-dismissible fade show border-0 shadow-sm" role="alert">
-                                {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-
-                    {% if form.errors %}
-                        <div class="alert alert-danger">
-                            <strong>Please correct the following errors:</strong>
-                            <ul>
-                            {% for field in form %}
-                                {% for error in field.errors %}
-                                    <li>{{ field.label }}: {{ error }}</li>
-                                {% endfor %}
-                            {% endfor %}
-                            </ul>
-                        </div>
-                    {% endif %}
-
+                <div class="card-body p-4 p-md-5 bg-light">
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         
-                        <h6 class="text-uppercase fw-bold text-muted mb-3 border-bottom pb-2">Product Identity</h6>
-                        <div class="mb-3">
-                            <label class="fw-bold small">Product Name *</label>
-                            {{ form.name }}
-                        </div>
-                        <div class="row g-2 mb-3">
+                        <h6 class="text-uppercase text-muted fw-bold mb-3 border-bottom pb-2">1. Basic Information</h6>
+                        <div class="row g-3 mb-4">
                             <div class="col-md-6">
-                                <label class="fw-bold small">Brand Category *</label>
+                                <label class="fw-bold small mb-1">Product Name *</label>
+                                {{ form.name }}
+                            </div>
+                            <div class="col-md-3">
+                                <label class="fw-bold small mb-1">Brand/Category *</label>
                                 {{ form.category }}
                             </div>
-                            <div class="col-md-6">
-                                <label class="fw-bold small">Condition</label>
+                            <div class="col-md-3">
+                                <label class="fw-bold small mb-1">Condition *</label>
                                 {{ form.condition }}
                             </div>
+                            <div class="col-12">
+                                <label class="fw-bold small mb-1">Description / Key Features *</label>
+                                {{ form.description }}
+                                <div class="form-text small">Describe processor speed, storage (SSD), screen size, etc.</div>
+                            </div>
                         </div>
 
-                        <div class="row g-2 mb-4">
-                            <div class="col-md-6">
-                                <label class="fw-bold small text-success">Selling Price (KES) *</label>
-                                {{ form.price }}
-                            </div>
-                            <div class="col-md-6">
-                                <label class="fw-bold small text-muted">Old Price (Optional)</label>
-                                {{ form.old_price }}
-                            </div>
-                        </div>
-                        
-                        <h6 class="text-uppercase fw-bold text-muted mb-3 border-bottom pb-2">Technical Specs</h6>
-                        <div class="row g-2 mb-3">
-                            <div class="col-6">
-                                <label class="small fw-bold">Processor</label>
-                                {{ form.processor }}
-                            </div>
-                            <div class="col-6">
-                                <label class="small fw-bold">RAM</label>
+                        <h6 class="text-uppercase text-muted fw-bold mb-3 border-bottom pb-2 mt-5">2. Technical Specs & Sorting</h6>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <label class="fw-bold small mb-1">RAM Size *</label>
                                 {{ form.ram }}
                             </div>
-                            <div class="col-6">
-                                <label class="small fw-bold">Storage</label>
-                                {{ form.storage }}
+                            <div class="col-md-4">
+                                <label class="fw-bold small mb-1">Laptop Type *</label>
+                                {{ form.laptop_type }}
                             </div>
-                            <div class="col-6">
-                                <label class="small fw-bold">Storage Type</label>
-                                {{ form.storage_type }}
-                            </div>
-                            <div class="col-6">
-                                <label class="small fw-bold">Screen Size</label>
-                                {{ form.screen_size }}
-                            </div>
-                             <div class="col-6">
-                                <label class="small fw-bold">Usage Type</label>
+                            <div class="col-md-4">
+                                <label class="fw-bold small mb-1">Primary Use Case *</label>
                                 {{ form.usage }}
                             </div>
-                            <div class="col-12 mt-2">
-                                <label class="small fw-bold text-primary">Laptop Design Style *</label>
-                                {{ form.laptop_type }}
-                                <small class="text-muted">Is this a Standard laptop, X360, or Ultrabook?</small>
+                            <div class="col-12">
+                                <div class="form-check form-switch p-3 bg-white rounded border">
+                                    {{ form.touchscreen }}
+                                    <label class="form-check-label fw-bold ms-2" for="{{ form.touchscreen.id_for_label }}">
+                                        <i class="fas fa-fingerprint text-success me-1"></i> Is this a Touchscreen device?
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="p-3 bg-light rounded mb-4 border">
-                            <h6 class="fw-bold text-dark"><i class="fas fa-images me-2"></i>Product Photos</h6>
+                        <h6 class="text-uppercase text-muted fw-bold mb-3 border-bottom pb-2 mt-5">3. Pricing & Images</h6>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="fw-bold small mb-1">Price (KES) *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white fw-bold">KES</span>
+                                    {{ form.price }}
+                                </div>
+                            </div>
                             
-                            <div class="mb-3">
-                                <label class="fw-bold small text-danger">1. Main Cover Image *</label>
-                                {{ form.image }}
-                                <small class="text-muted d-block">This image will be shown on the homepage.</small>
+                            <div class="col-md-6">
+                                <div class="d-flex gap-3 h-100 align-items-end">
+                                    <div class="form-check border p-2 rounded bg-white flex-grow-1">
+                                        {{ form.in_stock }}
+                                        <label class="form-check-label small fw-bold">In Stock</label>
+                                    </div>
+                                    <div class="form-check border p-2 rounded bg-white flex-grow-1">
+                                        {{ form.is_featured }}
+                                        <label class="form-check-label small fw-bold text-warning">Feature on Home?</label>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="mb-0">
-                                <label class="fw-bold small text-primary">2. Gallery Images (Select Multiple)</label>
-                                {{ form.gallery_images }}
-                                <small class="text-muted d-block">Hold <strong>CTRL</strong> (Windows) or <strong>CMD</strong> (Mac) to select multiple photos.</small>
+                            <div class="col-md-6">
+                                <label class="fw-bold small mb-1">Main Cover Image *</label>
+                                <div class="p-3 bg-white border rounded text-center">
+                                    {{ form.image }}
+                                    <small class="d-block text-muted mt-2">Use a clear, front-facing photo.</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="fw-bold small mb-1">Additional Gallery Photos</label>
+                                <div class="p-3 bg-white border dashed-border rounded text-center">
+                                    {{ form.gallery_images }}
+                                    <small class="d-block text-muted mt-2">Hold 'Ctrl' to select multiple photos.</small>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="mb-4">
-                            <label class="fw-bold small">Full Description</label>
-                            {{ form.description }}
+                        <div class="d-grid gap-2 mt-5">
+                            <button type="submit" class="btn btn-success btn-lg fw-bold shadow">
+                                <i class="fas fa-check-circle me-2"></i> Publish Product Live
+                            </button>
                         </div>
 
-                        <div class="d-flex flex-wrap gap-4 mb-4 p-3 bg-light rounded border">
-                            <div class="form-check">
-                                {{ form.in_stock }}
-                                <label class="form-check-label small">In Stock</label>
-                            </div>
-                            <div class="form-check">
-                                {{ form.is_featured }}
-                                <label class="form-check-label small">Feature on Home</label>
-                            </div>
-                            <div class="form-check">
-                                {{ form.touchscreen }}
-                                <label class="form-check-label small">Touchscreen</label>
-                            </div>
-                            <div class="form-check">
-                                {{ form.backlit_keyboard }}
-                                <label class="form-check-label small">Backlit Key</label>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-gold w-100 py-3 rounded-pill shadow fw-bold text-uppercase">
-                            <i class="fas fa-plus me-2"></i> Upload to Website
-                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    // Add Bootstrap classes to Django form inputs automatically
+    document.querySelectorAll('input[type="text"], input[type="number"], textarea, select').forEach(el => {
+        el.classList.add('form-control');
+    });
+    document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+        el.classList.add('form-check-input');
+    });
+    document.querySelectorAll('input[type="file"]').forEach(el => {
+        el.classList.add('form-control');
+    });
+</script>
+
+<style>
+    /* Custom Dashed Border for Gallery Upload */
+    .dashed-border {
+        border-style: dashed !important;
+        border-width: 2px !important;
+        border-color: #cbd5e1 !important;
+        background-color: #f8fafc !important;
+    }
+</style>
 {% endblock %}
