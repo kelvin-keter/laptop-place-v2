@@ -2,10 +2,12 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, help_text="Unique ID for the URL (e.g. gaming-laptops)")
+    slug = models.SlugField(unique=True, help_text="Unique ID for the URL (e.g. hp-laptops)")
 
     class Meta:
-        verbose_name_plural = "Categories"
+        # FIX: Changes "Categories" to "Brands" in the Admin Panel
+        verbose_name = "Brand"
+        verbose_name_plural = "Brands"
 
     def __str__(self):
         return self.name
@@ -49,7 +51,8 @@ class Product(models.Model):
     ]
 
     # --- BASIC INFO ---
-    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
+    # FIX: Added verbose_name="Brand" so the form label says "Brand"
+    category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE, verbose_name="Brand")
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     
