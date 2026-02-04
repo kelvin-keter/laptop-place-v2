@@ -1,0 +1,49 @@
+/* --- BRANDED ADMIN HEADER --- */
+:root {
+    --brand-green: #1B4F2D;
+    --brand-gold: #F7A800;
+}
+
+/* Main Header Bar */
+#header {
+    background: var(--brand-green) !important;
+    color: #fff;
+    border-bottom: 3px solid var(--brand-gold);
+}
+
+/* Header Links */
+#header a:link, #header a:visited {
+    color: #ffffff !important;
+}
+#header a:hover {
+    color: var(--brand-gold) !important;
+}
+
+/* Branding Text */
+#branding h1 {
+    color: var(--brand-gold) !important;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Buttons (Primary Actions) */
+.button.default, input[type=submit].default, .submit-row input.default {
+    background: var(--brand-green) !important;
+    transition: 0.3s;
+}
+.button.default:hover, input[type=submit].default:hover {
+    background: #143d22 !important;
+}
+
+/* Module Captions (The blue bars in the dashboard) */
+div.module caption, .module h2 {
+    background: var(--brand-green) !important;
+}
+
+/* Link Colors */
+a:link, a:visited {
+    color: var(--brand-green);
+}
+a:hover {
+    color: var(--brand-gold);
+}

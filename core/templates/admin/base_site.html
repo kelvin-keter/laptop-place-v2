@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}
+    Laptop Place Kenya Admin
+{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            Laptop Place <span style="color: #F7A800;">Kenya Admin</span>
+        </a>
+    </h1>
+{% endblock %}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'core/css/admin_brand.css' %}">
+{% endblock %}
