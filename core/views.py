@@ -1,8 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib import messages
-# NEW IMPORT: Required for creating users
 from django.contrib.auth.forms import UserCreationForm
 
 from .models import Product, Category, ProductImage
@@ -12,8 +11,7 @@ def index(request):
     products = Product.objects.filter(in_stock=True)
     categories = Category.objects.all()
     
-    # --- FEATURED SECTION FIX ---
-    # We order by '-created_at' (Newest First) before slicing [:4].
+    # Newest featured products first
     featured_products = Product.objects.filter(in_stock=True, is_featured=True).order_by('-created_at')[:4]
 
     # --- 1. SEARCH ---
@@ -83,23 +81,39 @@ def contact(request):
 def about(request):
     return render(request, 'core/about.html')
 
-# --- STAFF UPLOAD VIEW ---
+# --- NEW: STAFF DASHBOARD ---
+@login_required(login_url='/login/')
+def dashboard(request):
+    # 1. Stats Counters
+    total_laptops = Product.objects.count()
+    in_stock = Product.objects.filter(in_stock=True).count()
+    out_of_stock = Product.objects.filter(in_stock=False).count()
+    featured_count = Product.objects.filter(is_featured=True).count()
+    
+    # 2. Recent Activity (Last 5 Uploads)
+    recent_uploads = Product.objects.order_by('-created_at')[:5]
+    
+    context = {
+        'total_laptops': total_laptops,
+        'in_stock': in_stock,
+        'out_of_stock': out_of_stock,
+        'featured_count': featured_count,
+        'recent_uploads': recent_uploads,
+    }
+    return render(request, 'core/dashboard.html', context)
+
+# --- UPLOAD VIEW ---
 @user_passes_test(lambda u: u.is_staff, login_url='/login/')
 def upload_product(request):
     if request.method == 'POST':
         form = ProductUploadForm(request.POST, request.FILES)
-        
         if form.is_valid():
-            # 1. Save the main product first
             product = form.save()
             
-            # 2. Handle the Multiple Gallery Images
             gallery_files = request.FILES.getlist('gallery_images')
-            
             for f in gallery_files:
                 ProductImage.objects.create(product=product, image=f)
             
-            # Success Message
             msg = f'✅ SUCCESS: "{product.name}" uploaded successfully!'
             if gallery_files:
                 msg += f' (Added {len(gallery_files)} gallery photos)'
@@ -107,22 +121,19 @@ def upload_product(request):
             messages.success(request, msg)
             return redirect('upload_product')
         else:
-            # ERROR HANDLING
             messages.error(request, '❌ Upload Failed. Please check the form for errors below.')
-            
     else:
         form = ProductUploadForm()
     
     return render(request, 'core/upload_product.html', {'form': form})
 
-# --- NEW: ADD STAFF VIEW (Superuser Only) ---
+# --- ADD STAFF VIEW ---
 @user_passes_test(lambda u: u.is_superuser, login_url='/login/')
 def add_staff(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            # Automatically make them "Staff" so they can access the upload page
             user.is_staff = True
             user.save()
             messages.success(request, f'✅ Staff account created for {user.username}!')

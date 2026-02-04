@@ -2,10 +2,10 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth import views as auth_views  # 1. NEW: Import for Login/Logout
+from django.contrib.auth import views as auth_views
 
-# 2. UPDATED: Added 'add_staff' to the imports list
-from core.views import index, product_detail, contact, about, upload_product, add_staff
+# UPDATED: Added 'dashboard' to the imports list
+from core.views import index, product_detail, contact, about, upload_product, add_staff, dashboard
 
 urlpatterns = [
     # Admin Panel (Default Django Admin)
@@ -23,17 +23,13 @@ urlpatterns = [
     # About Us Page
     path('about/', about, name='about'),
 
-    # STAFF PORTAL (Upload Inventory)
+    # STAFF PORTAL
+    path('dashboard/', dashboard, name='dashboard'),      # <--- NEW DASHBOARD PATH
     path('upload/', upload_product, name='upload_product'),
 
-    # 3. NEW: AUTHENTICATION & STAFF MANAGEMENT
-    # Login Page (Uses your custom template)
+    # AUTHENTICATION & STAFF MANAGEMENT
     path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
-    
-    # Logout (Redirects to homepage after logging out)
     path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
-    
-    # Add Staff Page (Only Superusers can access this)
     path('staff/add/', add_staff, name='add_staff'),
 ]
 

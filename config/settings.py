@@ -149,3 +149,7 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+
+# --- AUTHENTICATION REDIRECTS ---
+# When a user logs in, send them to the Staff Dashboard
+LOGIN_REDIRECT_URL = 'dashboard'
